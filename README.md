@@ -1,6 +1,8 @@
 # Koronawirus (Web scraper + API)
 Web scraper do pozyskiwania informacji o statystykach koronawirusa ze strony ministerstwa zdrowia.
 
+https://koronawirus-api.herokuapp.com/api
+
 ### Endpointy
 ```
 # Pobieranie raportów

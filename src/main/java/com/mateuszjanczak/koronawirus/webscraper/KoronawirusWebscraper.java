@@ -28,8 +28,8 @@ public class KoronawirusWebscraper {
                Raport Raport = new Raport();
                Raport.setId(i);
                Raport.setWojewodztwo(tmp.get("Województwo").getAsString());
-               int zarazeni = tmp.get("Liczba").getAsString().isEmpty() ? 0 : Integer.parseInt(tmp.get("Liczba").getAsString());
-               int martwi = tmp.get("Liczba zgonów").getAsString().isEmpty() ? 0 : Integer.parseInt(tmp.get("Liczba zgonów").getAsString());
+               int zarazeni = tmp.get("Liczba").getAsString().isEmpty() ? 0 : Integer.parseInt(tmp.get("Liczba").getAsString().replaceAll("\\s",""));
+               int martwi = tmp.get("Liczba zgonów").getAsString().isEmpty() ? 0 : Integer.parseInt(tmp.get("Liczba zgonów").getAsString().replaceAll("\\s",""));
                Raport.setZarazeni(zarazeni);
                Raport.setMartwi(martwi);
                raporty.add(Raport);

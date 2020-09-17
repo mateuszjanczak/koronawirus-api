@@ -1,45 +1,55 @@
 package com.mateuszjanczak.koronawirus.webscraper;
 
 import com.google.gson.*;
-import com.mateuszjanczak.koronawirus.domain.model.Raport;
+import com.mateuszjanczak.koronawirus.model.Report;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import java.io.IOException;
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
+
+@Service
 public class KoronawirusWebscraper {
 
-    public static ArrayList<Raport> Scrap(){
-        Document document;
+    private final String URL = "https://www.gov.pl/web/koronawirus/wykaz-zarazen-koronawirusem-sars-cov-2";
+
+    public List<Report> loadList() {
         try {
-            document = Jsoup.connect("https://www.gov.pl/web/koronawirus/wykaz-zarazen-koronawirusem-sars-cov-2").get();
-            String raw = document.select("#registerData").text();
-
-            JsonElement jsonElement = new JsonParser().parse(raw);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            String json = jsonObject.get("parsedData").getAsString();
-            JsonArray lista = new Gson().fromJson(json, JsonArray.class);
-            ArrayList<Raport> raporty = new ArrayList<>();
-
-           for(int i = 0; i < lista.size(); i++){
-               JsonObject tmp = lista.get(i).getAsJsonObject();
-               Raport Raport = new Raport();
-               Raport.setId(i);
-               Raport.setWojewodztwo(tmp.get("Województwo").getAsString());
-               int zarazeni = tmp.get("Liczba").getAsString().isEmpty() ? 0 : Integer.parseInt(tmp.get("Liczba").getAsString().replaceAll("\\s",""));
-               int martwi = tmp.get("Liczba zgonów").getAsString().isEmpty() ? 0 : Integer.parseInt(tmp.get("Liczba zgonów").getAsString().replaceAll("\\s",""));
-               Raport.setZarazeni(zarazeni);
-               Raport.setMartwi(martwi);
-               raporty.add(Raport);
-           }
-
-            return raporty;
+            String json = this.scrapData();
+            List<Report> list = this.convertFromJsonToObject(json);
+            setIndexes(list);
+            setCountryName(list);
+            return list;
         } catch (IOException e) {
-            e.printStackTrace();
+            return Collections.emptyList();
         }
-        return null;
+    }
+
+    private String scrapData() throws IOException {
+        Document document = Jsoup.connect(this.URL).get(); // Download document
+        Element element = document.selectFirst("#registerData"); // Find element in DOM
+        String rawJson = element.text(); // Take data from element
+        JsonObject jsonObject = JsonParser.parseString(rawJson).getAsJsonObject(); // Parse raw JSON to JSON Object
+        return jsonObject.get("parsedData").getAsString().replaceAll("\\s",""); // Get data, parse to string and remove all spaces
+    }
+
+    private List<Report> convertFromJsonToObject(String json) {
+        Gson gson = new Gson();
+        return Arrays.asList(gson.fromJson(json, Report[].class));
+    }
+
+    private void setIndexes(List<Report> list) {
+        IntStream.range(0, list.size()).forEach(i -> list.get(i).setId(i));
+    }
+
+    private void setCountryName(List<Report> list) {
+        String name = "Polska";
+        list.get(0).setWojewodztwo(name);
     }
 
 }

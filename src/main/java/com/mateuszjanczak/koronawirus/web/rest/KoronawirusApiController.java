@@ -1,38 +1,38 @@
-package com.mateuszjanczak.koronawirus.rest;
+package com.mateuszjanczak.koronawirus.web.rest;
 
-import com.mateuszjanczak.koronawirus.domain.model.Raport;
+import com.mateuszjanczak.koronawirus.model.Report;
 import com.mateuszjanczak.koronawirus.service.KoronawirusService;
-import com.mateuszjanczak.koronawirus.webscraper.KoronawirusWebscraper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class KoronawirusApiController {
 
-    @Autowired
-    KoronawirusService koronawirusService;
+    private final KoronawirusService koronawirusService;
+
+    public KoronawirusApiController(KoronawirusService koronawirusService) {
+        this.koronawirusService = koronawirusService;
+    }
 
     @CrossOrigin
     @GetMapping
-    public ResponseEntity<ArrayList<Raport>> getRaports(){
+    public ResponseEntity<List<Report>> getReports(){
         return new ResponseEntity<>(koronawirusService.getAll(), HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/id/{id}")
-    public ResponseEntity<Raport> getRaportById(@PathVariable int id){
+    public ResponseEntity<Report> getReportById(@PathVariable int id){
         return new ResponseEntity<>(koronawirusService.getById(id), HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/wojewodztwo/{wojewodztwo}")
-    public ResponseEntity<Raport> getRaportByWojewodztwo(@PathVariable String wojewodztwo){
+    public ResponseEntity<Report> getReportByWojewodztwo(@PathVariable String wojewodztwo){
         return new ResponseEntity<>(koronawirusService.getByWojewodztwo(wojewodztwo), HttpStatus.OK);
     }
-
 }

@@ -1,12 +1,13 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.domain.model.Raport;
-import java.util.ArrayList;
+import com.mateuszjanczak.koronawirus.model.Report;
+
+import java.util.List;
 
 public interface KoronawirusService {
 
-    ArrayList<Raport> getAll();
-    Raport getById(int id);
-    Raport getByWojewodztwo(String wojewodztwo);
+    List<Report> getAll();
+    Report getById(int id);
+    Report getByWojewodztwo(String wojewodztwo);
 
 }

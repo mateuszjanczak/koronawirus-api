@@ -1,62 +1,33 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.domain.model.Raport;
+import com.mateuszjanczak.koronawirus.exception.ReportNotFound;
+import com.mateuszjanczak.koronawirus.model.Report;
 import com.mateuszjanczak.koronawirus.webscraper.KoronawirusWebscraper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class KoronawirusServiceImpl implements KoronawirusService {
 
-    ArrayList<Raport> raporty;
+    public final List<Report> list;
 
-    public KoronawirusServiceImpl() {
-        raporty = KoronawirusWebscraper.Scrap();
+    public KoronawirusServiceImpl(KoronawirusWebscraper koronawirusWebscraper) {
+        this.list = koronawirusWebscraper.loadList();
     }
 
     @Override
-    public ArrayList<Raport> getAll() {
-        return raporty;
+    public List<Report> getAll() {
+        return list;
     }
 
     @Override
-    public Raport getById(int id) {
-        for (Raport raport : raporty) {
-            if(raport.getId() == id) {
-                return raport;
-            }
-        }
-        return null;
+    public Report getById(int id) {
+        return list.stream().filter(report -> report.getId() == id).findFirst().orElseThrow(() -> new ReportNotFound(id));
     }
 
     @Override
-    public Raport getByWojewodztwo(String wojewodztwo) {
-        HashMap<String, String> wojewodztwa = new HashMap<>();
-        wojewodztwa.put("polska", "Cała polska");
-        wojewodztwa.put("dolnoslaskie", "dolnośląskie");
-        wojewodztwa.put("kujawsko-pomorskie", "kujawsko-pomorskie");
-        wojewodztwa.put("lubelskie", "lubelskie");
-        wojewodztwa.put("lubuskie", "lubuskie");
-        wojewodztwa.put("lodzkie", "łódzkie");
-        wojewodztwa.put("malopolskie", "małopolskie");
-        wojewodztwa.put("mazowieckie", "mazowieckie");
-        wojewodztwa.put("opolskie", "opolskie");
-        wojewodztwa.put("podkarpackie", "podkarpackie");
-        wojewodztwa.put("podlaskie", "podlaskie");
-        wojewodztwa.put("pomorskie", "pomorskie");
-        wojewodztwa.put("slaskie", "śląskie");
-        wojewodztwa.put("swietokrzyskie", "świętokrzyskie");
-        wojewodztwa.put("warminsko-mazurskie", "warmińsko-mazurskie");
-        wojewodztwa.put("wielkopolskie", "wielkopolskie");
-        wojewodztwa.put("zachodniopomorskie", "zachodniopomorskie");
-
-        for (Raport raport : raporty) {
-            if(raport.getWojewodztwo().equals(wojewodztwa.get(wojewodztwo))) {
-                return raport;
-            }
-        }
-        return null;
+    public Report getByWojewodztwo(String wojewodztwo) {
+        return list.stream().filter(report -> report.getWojewodztwo().equals(wojewodztwo)).findFirst().orElseThrow(() -> new ReportNotFound(wojewodztwo));
     }
 }

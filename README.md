@@ -4,16 +4,16 @@ Web scraper do pozyskiwania informacji o statystykach koronawirusa ze strony min
 https://koronawirus-api.herokuapp.com/api
 
 ### Endpointy
-```
-# Pobieranie raportów
+#### Pobieranie raportów
 
+```
 GET http://localhost:8080/api/
 
 Zwracany
 [
     {
         "id": 0,
-        "wojewodztwo": "Cała Polska",
+        "wojewodztwo": "Polska",
         "zarazeni": 425,
         "martwi": 5
     },
@@ -31,9 +31,11 @@ Zwracany
     },
     (...)
 ]
+```
 
-# Pobieranie pojedynczego raportu przez id lub nazwę województwa (bez polskich znaków)
+#### Pobieranie pojedynczego raportu przez id lub nazwę województwa
 
+```
 GET http://localhost:8080/api/id/{id}
 GET http://localhost:8080/api/wojewodztwo/{wojewodztwo}
 

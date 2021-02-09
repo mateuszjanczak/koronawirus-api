@@ -134,7 +134,7 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01 00:00/to/2
 
 #### Raporty z wszystkich województw
 ```
-GET https://koronawirus-api.herokuapp.com/api/voivodeship/
+GET https://koronawirus-api.herokuapp.com/api/covid19/voivodeship/
 ```
 ```json
 [
@@ -170,8 +170,8 @@ GET https://koronawirus-api.herokuapp.com/api/voivodeship/
 ```
 #### Raporty ze względu na województwo
 ```
-GET https://koronawirus-api.herokuapp.com/api/voivodeship/malopolskie
-GET https://koronawirus-api.herokuapp.com/api/voivodeship/małopolskie
+GET https://koronawirus-api.herokuapp.com/api/covid19/voivodeship/malopolskie
+GET https://koronawirus-api.herokuapp.com/api/covid19/voivodeship/małopolskie
 ```
 ```json
 {

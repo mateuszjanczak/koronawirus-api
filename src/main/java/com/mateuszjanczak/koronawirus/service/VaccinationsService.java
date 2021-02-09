@@ -1,13 +1,21 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.VaccinationsAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VaccinationsDistrictAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGFeature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VaccinationsGeneralAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPFeature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VaccinationsProvinceAPI;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
+import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
 import com.mateuszjanczak.koronawirus.mapper.VaccinationsMapper;
-import com.mateuszjanczak.koronawirus.model.vaccinations.VaccinationsReport;
+import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;
+import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
+import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
@@ -23,33 +31,46 @@ import java.util.stream.Collectors;
 @Service
 public class VaccinationsService implements IVaccinationsService {
 
-    private final VaccinationsAPI vaccinationsAPI;
+    private final VaccinationsGeneralAPI vaccinationsGeneralAPI;
+    private final VaccinationsProvinceAPI vaccinationsProvinceAPI;
+    private final VaccinationsDistrictAPI vaccinationsDistrictAPI;
 
     public VaccinationsService() {
-        Retrofit retrofit = new Retrofit.Builder()
+        this.vaccinationsGeneralAPI = new Retrofit.Builder()
                 .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/global_szczepienia_widok3/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                .build()
+                .create(VaccinationsGeneralAPI.class);
 
-        this.vaccinationsAPI = retrofit.create(VaccinationsAPI.class);
+        this.vaccinationsProvinceAPI = new Retrofit.Builder()
+                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/wojewodztwa_szczepienia_widok3/FeatureServer/0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(VaccinationsProvinceAPI.class);
+
+        this.vaccinationsDistrictAPI = new Retrofit.Builder()
+                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/powiaty_szczepienia_widok/FeatureServer/0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(VaccinationsDistrictAPI.class);
     }
 
     @Override
-    public VaccinationsReport getDailyReport() {
+    public VGReport getDailyReport() {
 
-        Call<VaccinationsRoot> call = vaccinationsAPI.getDailyReport();
+        Call<VGRoot> call = vaccinationsGeneralAPI.getDailyReport();
 
         try {
-            VaccinationsRoot response = call.execute().body();
-            VaccinationsAttributes vaccinationsAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            return VaccinationsMapper.apply(vaccinationsAttributes);
+            VGRoot response = call.execute().body();
+            VGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            return VaccinationsMapper.apply(attributes);
         } catch (IOException | NullPointerException e) {
             throw new ApiErrorException();
         }
     }
 
     @Override
-    public List<VaccinationsReport> getPeriodicReport(String from, String to) {
+    public List<VGReport> getPeriodicReport(String from, String to) {
 
         String[] acceptedFormats = {"yyyy-MM-dd","yyyy-MM-dd HH:mm"};
 
@@ -61,17 +82,56 @@ public class VaccinationsService implements IVaccinationsService {
         }
 
         String condition = "Data BETWEEN '" + from + "' AND '"  + to + "'";
-        Call<VaccinationsRoot> call = vaccinationsAPI.getCustomReport(condition);
+        Call<VGRoot> call = vaccinationsGeneralAPI.getCustomReport(condition);
 
         try {
-            VaccinationsRoot response = call.execute().body();
+            VGRoot response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(VaccinationsFeature::getAttributes)
+                    .map(VGFeature::getAttributes)
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ApiErrorException();
+        }
+    }
+
+    @Override
+    public List<VPReport> getAllProvinceReports() {
+
+        Call<VPRoot> call = vaccinationsProvinceAPI.getAllReports();
+
+        try {
+            VPRoot response = call.execute().body();
+            return Objects
+                    .requireNonNull(response)
+                    .getFeatures()
+                    .stream()
+                    .map(VPFeature::getAttributes)
+                    .map(VaccinationsMapper::apply)
+                    .collect(Collectors.toList());
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ApiErrorException();
+        }
+    }
+
+    @Override
+    public VPReport getReportByProvince(String province) {
+
+        String condition = "jpt_nazwa_ = '" + province + "'";
+
+        Call<VPRoot> call = vaccinationsProvinceAPI.getCustomReport(condition);
+
+        try {
+            VPRoot response = call.execute().body();
+            VPAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            return VaccinationsMapper.apply(attributes);
+        } catch (IndexOutOfBoundsException e) {
+            throw new BadVoivodeshipNameException();
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ApiErrorException();

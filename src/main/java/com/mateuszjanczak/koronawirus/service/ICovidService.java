@@ -1,13 +1,13 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.model.Report;
+import com.mateuszjanczak.koronawirus.model.covid.CovidReport;
 
 import java.util.List;
 
 public interface ICovidService {
 
-    Report getDailyReport();
+    CovidReport getDailyReport();
 
-    List<Report> getPeriodicReport(String from, String to);
+    List<CovidReport> getPeriodicReport(String from, String to);
 
 }

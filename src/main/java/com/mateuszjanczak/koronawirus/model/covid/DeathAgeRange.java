@@ -1,4 +1,4 @@
-package com.mateuszjanczak.koronawirus.model;
+package com.mateuszjanczak.koronawirus.model.covid;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class DeathAgeRange {
     private AgeRange ageRange;
-    private int deaths;
+    private Integer deaths;
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @Builder
 public class CovidReport {
     private Date reportDate;
-    private AllTime allTime;
+    private General general;
     private Today today;
 }
 

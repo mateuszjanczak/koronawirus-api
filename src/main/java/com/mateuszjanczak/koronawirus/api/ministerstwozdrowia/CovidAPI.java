@@ -1,5 +1,6 @@
-package com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid19;
+package com.mateuszjanczak.koronawirus.api.ministerstwozdrowia;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.CovidRoot;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

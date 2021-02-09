@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class AllTime {
+public class General {
     private Integer vaccinations;
     private Integer firstDoses;
     private Integer secondDoses;

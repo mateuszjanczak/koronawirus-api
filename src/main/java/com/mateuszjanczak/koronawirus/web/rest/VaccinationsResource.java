@@ -1,6 +1,5 @@
 package com.mateuszjanczak.koronawirus.web.rest;
 
-import com.mateuszjanczak.koronawirus.model.covid.CovidReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.VaccinationsReport;
 import com.mateuszjanczak.koronawirus.service.IVaccinationsService;
 import org.springframework.http.HttpStatus;

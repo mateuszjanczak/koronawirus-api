@@ -1,40 +1,40 @@
 package com.mateuszjanczak.koronawirus.mapper;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid19.CovidAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.CovidAttributes;
 import com.mateuszjanczak.koronawirus.model.covid.*;
 
 import java.util.Arrays;
 import java.util.Date;
 
 public class CovidMapper {
-    public static CovidReport apply(CovidAttributes covidAttributes) {
+    public static CovidReport apply(CovidAttributes attributes) {
         return CovidReport.builder()
-                .reportDate(new Date(covidAttributes.getData()))
-                .allTime(AllTime.builder()
-                        .deaths(covidAttributes.getLiczba_zgonow())
-                        .infections(covidAttributes.getLiczba_zakazen())
-                        .recovered(covidAttributes.getLiczba_ozdrowiencow())
+                .reportDate(new Date(attributes.getData()))
+                .general(General.builder()
+                        .deaths(attributes.getLiczba_zgonow())
+                        .infections(attributes.getLiczba_zakazen())
+                        .recovered(attributes.getLiczba_ozdrowiencow())
                         .build()
                 )
                 .today(Today.builder()
-                        .newInfections(covidAttributes.getZakazenia_dzienne())
-                        .newDeaths(covidAttributes.getZgony_dzienne())
+                        .newInfections(attributes.getZakazenia_dzienne())
+                        .newDeaths(attributes.getZgony_dzienne())
                         .deathAgeRange(
                                 Arrays.asList(
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR0_10).deaths(covidAttributes.getZgony0_10()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR11_20).deaths(covidAttributes.getZgony11_20()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR21_30).deaths(covidAttributes.getZgony21_30()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR31_40).deaths(covidAttributes.getZgony31_40()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR41_50).deaths(covidAttributes.getZgony41_50()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR51_60).deaths(covidAttributes.getZgony51_60()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR61_70).deaths(covidAttributes.getZgony61_70()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR71_80).deaths(covidAttributes.getZgony70_71()).build(),
-                                        DeathAgeRange.builder().ageRange(AgeRange.AR81_).deaths(covidAttributes.getZgony81_()).build()
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR0_10).deaths(attributes.getZgony0_10()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR11_20).deaths(attributes.getZgony11_20()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR21_30).deaths(attributes.getZgony21_30()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR31_40).deaths(attributes.getZgony31_40()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR41_50).deaths(attributes.getZgony41_50()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR51_60).deaths(attributes.getZgony51_60()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR61_70).deaths(attributes.getZgony61_70()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR71_80).deaths(attributes.getZgony70_71()).build(),
+                                        DeathAgeRange.builder().ageRange(AgeRange.AR81_).deaths(attributes.getZgony81_()).build()
                                 )
                         )
                         .deathGender(DeathGender.builder()
-                                .female(covidAttributes.getZgony_kobiety())
-                                .male(covidAttributes.getZgony_mezczyzni())
+                                .female(attributes.getZgony_kobiety())
+                                .male(attributes.getZgony_mezczyzni())
                                 .build())
                         .build())
                 .build();

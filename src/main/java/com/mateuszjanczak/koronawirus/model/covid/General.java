@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AllTime {
+public class General {
     private Integer infections;
     private Integer deaths;
     private Integer recovered;

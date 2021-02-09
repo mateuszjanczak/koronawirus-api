@@ -1,13 +1,11 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid19.CovidFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.VaccinationsAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.VaccinationsRoot;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
-import com.mateuszjanczak.koronawirus.exception.BadFormatException;
+import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
 import com.mateuszjanczak.koronawirus.mapper.VaccinationsMapper;
 import com.mateuszjanczak.koronawirus.model.vaccinations.VaccinationsReport;
 import org.apache.commons.lang3.time.DateUtils;
@@ -29,7 +27,7 @@ public class VaccinationsService implements IVaccinationsService {
 
     public VaccinationsService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/global_szczepienia_widok3/FeatureServer/0/")
+                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/global_szczepienia_widok3/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -59,7 +57,7 @@ public class VaccinationsService implements IVaccinationsService {
             DateUtils.parseDate(from, acceptedFormats);
             DateUtils.parseDate(to, acceptedFormats);
         } catch (ParseException e) {
-            throw new BadFormatException();
+            throw new BadDateFormatException();
         }
 
         String condition = "Data BETWEEN '" + from + "' AND '"  + to + "'";

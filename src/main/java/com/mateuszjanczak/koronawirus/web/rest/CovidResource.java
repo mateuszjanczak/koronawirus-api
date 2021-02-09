@@ -1,6 +1,7 @@
 package com.mateuszjanczak.koronawirus.web.rest;
 
 import com.mateuszjanczak.koronawirus.model.covid.CovidReport;
+import com.mateuszjanczak.koronawirus.model.voivodeship.VoivodeshipReport;
 import com.mateuszjanczak.koronawirus.service.ICovidService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,17 @@ public class CovidResource {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody List<CovidReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
         return covidService.getPeriodicReport(from, to);
+    }
+
+    @GetMapping("/voivodeship")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<VoivodeshipReport> getAllVoivodeshipReports() {
+        return covidService.getAllVoivodeshipReports();
+    }
+
+    @GetMapping("/voivodeship/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody VoivodeshipReport getReportByVoivodeship(@PathVariable String name) {
+        return covidService.getReportByVoivodeship(name);
     }
 }

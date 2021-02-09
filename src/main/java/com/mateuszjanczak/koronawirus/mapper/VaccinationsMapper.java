@@ -10,7 +10,7 @@ public class VaccinationsMapper {
     public static VaccinationsReport apply(VaccinationsAttributes attributes) {
         return VaccinationsReport.builder()
                 .reportDate(new Date(attributes.getData()))
-                .allTime(AllTime.builder()
+                .general(General.builder()
                         .vaccinations(attributes.getSzczepienia_suma())
                         .firstDoses(attributes.getDawka_1_suma())
                         .secondDoses(attributes.getDawka_2_suma())

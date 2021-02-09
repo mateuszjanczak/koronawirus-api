@@ -1,4 +1,4 @@
-package com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid19;
+package com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid;
 
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
 import lombok.Data;

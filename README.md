@@ -8,7 +8,7 @@ https://koronawirus-api.herokuapp.com/api/covid19/daily
 ### Koronawirus
 #### Pobieranie dzisiejszego raportu
 ```
-GET http://127.0.0.1:8080/api/covid19/daily
+GET https://koronawirus-api.herokuapp.com/api/covid19/daily
 ```
 ```json
 {
@@ -69,8 +69,8 @@ GET http://127.0.0.1:8080/api/covid19/daily
 
 #### Pobieranie raportów w danym przedziale czasowym
 ```
-GET http://127.0.0.1:8080/api/covid19/from/2021-01-01/to/2021-02-08/
-GET http://127.0.0.1:8080/api/covid19/from/2021-01-01 00:00/to/2021-02-08 23:59/
+GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 ```json
 [
@@ -132,10 +132,81 @@ GET http://127.0.0.1:8080/api/covid19/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ]
 ```
 
+#### Raporty z wszystkich województw
+```
+GET https://koronawirus-api.herokuapp.com/api/voivodeship/
+```
+```json
+[
+  {
+    "voivodeship": "opolskie",
+    "reportDate": "2021-02-09T02:47:03.975+0000",
+    "general": {
+      "population": 986506,
+      "infections": 41180,
+      "infectionRatioPer10kPopulation": 0.41,
+      "deaths": 1042,
+      "recovered": 116,
+      "quarantine": 2327
+    },
+    "today": {
+      "infections": 40,
+      "deaths": 0,
+      "test": {
+        "all": 563,
+        "positive": 46,
+        "negative": 511,
+        "poz": 1,
+        "other": 6
+      },
+      "deathType": {
+        "covid": 0,
+        "comorbidities": 0
+      }
+    }
+  },
+  {...}
+]
+```
+#### Raporty ze względu na województwo
+```
+GET https://koronawirus-api.herokuapp.com/api/voivodeship/malopolskie
+GET https://koronawirus-api.herokuapp.com/api/voivodeship/małopolskie
+```
+```json
+{
+  "voivodeship": "małopolskie",
+  "reportDate": "2021-02-09T02:49:00.248+0000",
+  "general": {
+    "population": 3400577,
+    "infections": 113070,
+    "infectionRatioPer10kPopulation": 0.24,
+    "deaths": 2742,
+    "recovered": 241,
+    "quarantine": 6261
+  },
+  "today": {
+    "infections": 83,
+    "deaths": 0,
+    "test": {
+      "all": 1211,
+      "positive": 95,
+      "negative": 1089,
+      "poz": 3,
+      "other": 27
+    },
+    "deathType": {
+      "covid": 0,
+      "comorbidities": 0
+    }
+  }
+}
+```
+
 ### Szczepienia
 #### Pobieranie dzisiejszego raportu
 ```
-GET http://127.0.0.1:8080/api/vaccinations/daily
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/daily
 ```
 ```json
 {
@@ -210,8 +281,8 @@ GET http://127.0.0.1:8080/api/vaccinations/daily
 
 #### Pobieranie raportów w danym przedziale czasowym
 ```
-GET http://127.0.0.1:8080/api/vaccinations/from/2021-01-01/to/2021-02-08/
-GET http://127.0.0.1:8080/api/vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 ```json
 [

@@ -1,8 +1,8 @@
 package com.mateuszjanczak.koronawirus.web.rest;
 
-import com.mateuszjanczak.koronawirus.model.covid.CovidReport;
-import com.mateuszjanczak.koronawirus.model.voivodeship.VoivodeshipReport;
-import com.mateuszjanczak.koronawirus.service.ICovidService;
+import com.mateuszjanczak.koronawirus.model.covid.global.CGReport;
+import com.mateuszjanczak.koronawirus.model.covid.province.CPReport;
+import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,25 +22,26 @@ public class CovidResource {
     @GetMapping("/daily")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    CovidReport getDailyReport() {
+    CGReport getDailyReport() {
         return covidService.getDailyReport();
     }
 
     @GetMapping("/from/{from}/to/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<CovidReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
+    public @ResponseBody List<CGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
         return covidService.getPeriodicReport(from, to);
     }
 
-    @GetMapping("/voivodeship")
+    @GetMapping("/province")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<VoivodeshipReport> getAllVoivodeshipReports() {
-        return covidService.getAllVoivodeshipReports();
+    public @ResponseBody List<CPReport> getAllProvinceReports() {
+        return covidService.getAllProvinceReports();
     }
 
-    @GetMapping("/voivodeship/{name}")
+    @GetMapping("/province/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody VoivodeshipReport getReportByVoivodeship(@PathVariable String name) {
-        return covidService.getReportByVoivodeship(name);
+    public @ResponseBody
+    CPReport getReportByProvince(@PathVariable String name) {
+        return covidService.getReportByProvince(name);
     }
 }

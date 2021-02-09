@@ -1,20 +1,21 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.CovidAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.VoivodeshipAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.CovidAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.CovidFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.CovidRoot;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.voivodeship.VoivodeshipAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.voivodeship.VoivodeshipFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.voivodeship.VoivodeshipRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CovidDistrictAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGFeature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CovidGeneralAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPFeature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CovidProvinceAPI;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
 import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
 import com.mateuszjanczak.koronawirus.mapper.CovidMapper;
-import com.mateuszjanczak.koronawirus.mapper.VoivodoshipMapper;
-import com.mateuszjanczak.koronawirus.model.covid.*;
-import com.mateuszjanczak.koronawirus.model.voivodeship.VoivodeshipReport;
+import com.mateuszjanczak.koronawirus.model.covid.global.CGReport;
+import com.mateuszjanczak.koronawirus.model.covid.province.CPReport;
+import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
@@ -30,40 +31,47 @@ import java.util.stream.Collectors;
 @Service
 public class CovidService implements ICovidService {
 
-    private final CovidAPI covidAPI;
-    private final VoivodeshipAPI voivodeshipAPI;
+    private final CovidGeneralAPI covidGeneralAPI;
+    private final CovidProvinceAPI covidProvinceAPI;
+    private final CovidDistrictAPI covidDistrictAPI;
 
     public CovidService() {
-        this.covidAPI  = new Retrofit.Builder()
+        this.covidGeneralAPI = new Retrofit.Builder()
                 .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/global_corona_widok2/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(CovidAPI.class);
+                .create(CovidGeneralAPI.class);
 
-        this.voivodeshipAPI  = new Retrofit.Builder()
+        this.covidProvinceAPI = new Retrofit.Builder()
                 .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/wojewodztwa_corona_widok/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(VoivodeshipAPI.class);
+                .create(CovidProvinceAPI.class);
+
+        this.covidDistrictAPI = new Retrofit.Builder()
+                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/powiaty_corona_widok_woj/FeatureServer/0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(CovidDistrictAPI.class);
     }
 
 
     @Override
-    public CovidReport getDailyReport() {
+    public CGReport getDailyReport() {
 
-        Call<CovidRoot> call = covidAPI.getDailyReport();
+        Call<CGRoot> call = covidGeneralAPI.getDailyReport();
 
         try {
-            CovidRoot response = call.execute().body();
-            CovidAttributes covidAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            return CovidMapper.apply(covidAttributes);
+            CGRoot response = call.execute().body();
+            CGAttributes CGAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            return CovidMapper.apply(CGAttributes);
         } catch (IOException | NullPointerException e) {
             throw new ApiErrorException();
         }
     }
 
     @Override
-    public List<CovidReport> getPeriodicReport(String from, String to) {
+    public List<CGReport> getPeriodicReport(String from, String to) {
 
         String[] acceptedFormats = {"yyyy-MM-dd","yyyy-MM-dd HH:mm"};
 
@@ -75,15 +83,15 @@ public class CovidService implements ICovidService {
         }
 
         String condition = "Data BETWEEN '" + from + "' AND '"  + to + "'";
-        Call<CovidRoot> call = covidAPI.getCustomReport(condition);
+        Call<CGRoot> call = covidGeneralAPI.getCustomReport(condition);
 
         try {
-            CovidRoot response = call.execute().body();
+            CGRoot response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CovidFeature::getAttributes)
+                    .map(CGFeature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -92,16 +100,16 @@ public class CovidService implements ICovidService {
     }
 
     @Override
-    public VoivodeshipReport getReportByVoivodeship(String voivodeship) {
+    public CPReport getReportByProvince(String voivodeship) {
 
         String condition = "jpt_nazwa_ = '" + voivodeship + "' OR Nazwa_filter = '" + voivodeship + "'";
 
-        Call<VoivodeshipRoot> call = voivodeshipAPI.getCustomReport(condition);
+        Call<CPRoot> call = covidProvinceAPI.getCustomReport(condition);
 
         try {
-            VoivodeshipRoot response = call.execute().body();
-            VoivodeshipAttributes voivodeshipAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            return VoivodoshipMapper.apply(voivodeshipAttributes);
+            CPRoot response = call.execute().body();
+            CPAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            return CovidMapper.apply(attributes);
         } catch (IndexOutOfBoundsException e) {
             throw new BadVoivodeshipNameException();
         } catch (IOException | NullPointerException e) {
@@ -111,18 +119,18 @@ public class CovidService implements ICovidService {
     }
 
     @Override
-    public List<VoivodeshipReport> getAllVoivodeshipReports() {
+    public List<CPReport> getAllProvinceReports() {
 
-        Call<VoivodeshipRoot> call = voivodeshipAPI.getAllReports();
+        Call<CPRoot> call = covidProvinceAPI.getAllReports();
 
         try {
-            VoivodeshipRoot response = call.execute().body();
+            CPRoot response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(VoivodeshipFeature::getAttributes)
-                    .map(VoivodoshipMapper::apply)
+                    .map(CPFeature::getAttributes)
+                    .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
             throw new ApiErrorException();

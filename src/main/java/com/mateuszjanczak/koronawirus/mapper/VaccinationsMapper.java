@@ -1,7 +1,11 @@
 package com.mateuszjanczak.koronawirus.mapper;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
+import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDGeneral;
+import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
+import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDToday;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.*;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPGeneral;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
@@ -50,7 +54,7 @@ public class VaccinationsMapper {
 
     public static VPReport apply(VPAttributes attributes) {
         return VPReport.builder()
-                .voivodeship(attributes.getJpt_nazwa_())
+                .province(attributes.getJpt_nazwa_())
                 .reportDate(new Date())
                 .general(VPGeneral.builder()
                         .population(attributes.getPopulacja())
@@ -68,4 +72,23 @@ public class VaccinationsMapper {
                 .build();
     }
 
+    public static VDReport apply(VDAttributes attributes) {
+        return VDReport.builder()
+                .district(attributes.getJPT_NAZWA_())
+                .reportDate(new Date())
+                .general(VDGeneral.builder()
+                        .population(attributes.getPOPULACJA())
+                        .vaccinations(attributes.getSZCZEPIENIA_SUMA())
+                        .firstDoses(attributes.getSZCZEPIENIA_SUMA() - attributes.getDAWKA_2_SUMA())
+                        .secondDoses(attributes.getDAWKA_2_SUMA())
+                        .build()
+                )
+                .today(VDToday.builder()
+                        .vaccinations(attributes.getSZCZEPIENIA_DZIENNIE())
+                        .firstDoses(attributes.getSZCZEPIENIA_DZIENNIE() - attributes.getDAWKA_2_DZIENNIE())
+                        .secondDoses(attributes.getDAWKA_2_DZIENNIE())
+                        .build()
+                )
+                .build();
+    }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @Builder
 public class CPReport {
-    private String voivodeship;
+    private String province;
     private Date reportDate;
     private CPGeneral general;
     private CPToday today;

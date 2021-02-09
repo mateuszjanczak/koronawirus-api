@@ -1,5 +1,6 @@
 package com.mateuszjanczak.koronawirus.service.interfaces;
 
+import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
 
@@ -13,4 +14,8 @@ public interface IVaccinationsService {
     List<VPReport> getAllProvinceReports();
 
     VPReport getReportByProvince(String name);
+
+    List<VDReport> getAllDistrictReports();
+
+    VDReport getReportByDistrict(String name);
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @Builder
 public class VPReport {
-    private String voivodeship;
+    private String province;
     private Date reportDate;
     private VPGeneral general;
     private VPToday today;

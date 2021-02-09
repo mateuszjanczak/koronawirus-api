@@ -1,5 +1,8 @@
 package com.mateuszjanczak.koronawirus.service;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDFeature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CovidDistrictAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGFeature;
@@ -13,6 +16,7 @@ import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
 import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
 import com.mateuszjanczak.koronawirus.mapper.CovidMapper;
+import com.mateuszjanczak.koronawirus.model.covid.district.CDReport;
 import com.mateuszjanczak.koronawirus.model.covid.global.CGReport;
 import com.mateuszjanczak.koronawirus.model.covid.province.CPReport;
 import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
@@ -132,6 +136,43 @@ public class CovidService implements ICovidService {
                     .map(CPFeature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
+        } catch (IOException | NullPointerException e) {
+            throw new ApiErrorException();
+        }
+    }
+
+    @Override
+    public List<CDReport> getAllDistrictReports() {
+
+        Call<CDRoot> call = covidDistrictAPI.getAllReports();
+
+        try {
+            CDRoot response = call.execute().body();
+            return Objects
+                    .requireNonNull(response)
+                    .getFeatures()
+                    .stream()
+                    .map(CDFeature::getAttributes)
+                    .map(CovidMapper::apply)
+                    .collect(Collectors.toList());
+        } catch (IOException | NullPointerException e) {
+            throw new ApiErrorException();
+        }
+    }
+
+    @Override
+    public CDReport getReportByDistrict(String district) {
+
+        String condition = "jpt_nazwa_ = '" + district + "' ";
+
+        Call<CDRoot> call = covidDistrictAPI.getCustomReport(condition);
+
+        try {
+            CDRoot response = call.execute().body();
+            CDAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            return CovidMapper.apply(attributes);
+        } catch (IndexOutOfBoundsException e) {
+            throw new BadVoivodeshipNameException();
         } catch (IOException | NullPointerException e) {
             throw new ApiErrorException();
         }

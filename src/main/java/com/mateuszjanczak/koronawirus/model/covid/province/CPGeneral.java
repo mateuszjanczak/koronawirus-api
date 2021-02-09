@@ -8,7 +8,6 @@ import lombok.Data;
 public class CPGeneral {
     private Integer population;
     private Integer infections;
-    private Double infectionRatioPer10kPopulation;
     private Integer deaths;
     private Integer recovered;
     private Integer quarantine;

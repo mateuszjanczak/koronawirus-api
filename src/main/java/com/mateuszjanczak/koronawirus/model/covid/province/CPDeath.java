@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CPDeathType {
+public class CPDeath {
+    private Integer deaths;
     private Integer covid;
-    private Integer comorbidities;
+    private Integer coexistent;
 }

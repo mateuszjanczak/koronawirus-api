@@ -44,7 +44,7 @@ public class CDAttributes {
     @SerializedName("Shape__Length")
     public double shape__Length;
     @SerializedName("LICZBA_OZDROWIENCOW")
-    public Object lICZBA_OZDROWIENCOW;
+    public int lICZBA_OZDROWIENCOW;
     @SerializedName("WOJEWODZTWO")
     public String wOJEWODZTWO;
 }

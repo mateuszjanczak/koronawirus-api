@@ -1,5 +1,6 @@
 package com.mateuszjanczak.koronawirus.web.rest;
 
+import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
 import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
@@ -43,5 +44,18 @@ public class VaccinationsResource {
     public @ResponseBody
     VPReport getReportByProvince(@PathVariable String name) {
         return vaccinationsService.getReportByProvince(name);
+    }
+
+    @GetMapping("/district")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<VDReport> getAllDistrictReports() {
+        return vaccinationsService.getAllDistrictReports();
+    }
+
+    @GetMapping("/district/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    VDReport getReportByDistrict(@PathVariable String name) {
+        return vaccinationsService.getReportByDistrict(name);
     }
 }

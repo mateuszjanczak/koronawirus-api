@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class CPToday {
     private Integer infections;
-    private Integer deaths;
-    private CPTest test;
-    private CPDeathType deathType;
+    private Double infectionRatioPer10kPopulation;
+    private CPTest tests;
+    private CPDeath deaths;
 }

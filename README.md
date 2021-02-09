@@ -76,29 +76,63 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/province/małopolskie
 ```
 ```json
 {
-  "voivodeship": "małopolskie",
-  "reportDate": "2021-02-09T19:47:09.551+0000",
+  "province": "małopolskie",
+  "reportDate": "2021-02-09T22:30:18.950+0000",
   "general": {
     "population": 3400577,
     "infections": 113070,
-    "infectionRatioPer10kPopulation": 0.56,
     "deaths": 2742,
     "recovered": 226,
     "quarantine": 6858
   },
   "today": {
     "infections": 191,
-    "deaths": 19,
-    "test": {
+    "infectionRatioPer10kPopulation": 0.56,
+    "tests": {
       "all": 2659,
       "positive": 212,
       "negative": 2415,
       "poz": 856,
       "other": 32
     },
-    "deathType": {
+    "deaths": {
+      "deaths": 19,
       "covid": 8,
-      "comorbidities": 11
+      "coexistent": 11
+    }
+  }
+}
+```
+
+#### Raporty - powiat
+```
+GET https://koronawirus-api.herokuapp.com/api/covid19/district
+GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
+```
+```json
+{
+  "district": "powiat tarnowski",
+  "province": "małopolskie",
+  "reportDate": "2021-02-09T22:31:28.762+0000",
+  "general": {
+    "population": 201570,
+    "quarantine": 230
+  },
+  "today": {
+    "infections": 10,
+    "infectionRatioPer10kPopulation": 0.5,
+    "recovered": 0,
+    "deaths": {
+      "deaths": 0,
+      "covid": 0,
+      "coexistent": 0
+    },
+    "tests": {
+      "all": 130,
+      "positive": 10,
+      "negative": 119,
+      "poz": 32,
+      "other": 1
     }
   }
 }
@@ -189,8 +223,8 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/province/małopolskie
 ```
 ```json
 {
-  "voivodeship": "małopolskie",
-  "reportDate": "2021-02-09T19:44:52.291+0000",
+  "province": "małopolskie",
+  "reportDate": "2021-02-09T22:32:28.364+0000",
   "general": {
     "population": 3400577,
     "vaccinations": 136981,
@@ -201,6 +235,29 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/province/małopolskie
     "vaccinations": 3362,
     "firstDoses": 2258,
     "secondDoses": 1104
+  }
+}
+```
+
+#### Raporty - powiat
+```
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/district
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarnowski
+```
+```json
+{
+  "district": "powiat tarnowski",
+  "reportDate": "2021-02-09T22:33:16.646+0000",
+  "general": {
+    "population": 201570,
+    "vaccinations": 2512,
+    "firstDoses": 2432,
+    "secondDoses": 80
+  },
+  "today": {
+    "vaccinations": 30,
+    "firstDoses": 30,
+    "secondDoses": 0
   }
 }
 ```

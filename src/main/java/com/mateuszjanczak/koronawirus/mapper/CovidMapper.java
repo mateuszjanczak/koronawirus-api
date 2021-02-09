@@ -1,7 +1,9 @@
 package com.mateuszjanczak.koronawirus.mapper;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
+import com.mateuszjanczak.koronawirus.model.covid.district.*;
 import com.mateuszjanczak.koronawirus.model.covid.global.*;
 import com.mateuszjanczak.koronawirus.model.covid.province.*;
 
@@ -44,29 +46,58 @@ public class CovidMapper {
 
     public static CPReport apply(CPAttributes attributes) {
         return CPReport.builder()
-                .voivodeship(attributes.getJpt_nazwa_())
+                .province(attributes.getJpt_nazwa_())
                 .reportDate(new Date())
                 .general(CPGeneral.builder()
                         .quarantine(attributes.getKWARANTANNA())
                         .infections(attributes.getSUM_Confirmed())
-                        .infectionRatioPer10kPopulation(attributes.getPOTWIERDZONE_10_TYS_OSOB())
                         .deaths(attributes.getSUM_Deaths())
                         .recovered(attributes.getSUM_Recovered())
                         .population(attributes.getPopulacja())
                         .build())
                 .today(CPToday.builder()
                         .infections(attributes.getPotwierdzone_dzienne())
-                        .deaths(attributes.getSmiertelne_dzienne())
-                        .test(CPTest.builder()
+                        .infectionRatioPer10kPopulation(attributes.getPOTWIERDZONE_10_TYS_OSOB())
+                        .tests(CPTest.builder()
                                 .all(attributes.getTESTY())
                                 .positive(attributes.getTESTY_POZYTYWNE())
                                 .negative(attributes.getTESTY_NEGATYWNE())
                                 .poz(attributes.getZLECENIA_POZ())
                                 .other(attributes.getTESTY_POZOSTALE())
                                 .build())
-                        .deathType(CPDeathType.builder()
+                        .deaths(CPDeath.builder()
+                                .deaths(attributes.getSmiertelne_dzienne())
                                 .covid(attributes.getZGONY_COVID())
-                                .comorbidities(attributes.getZGONY_WSPOLISTNIEJACE())
+                                .coexistent(attributes.getZGONY_WSPOLISTNIEJACE())
+                                .build())
+                        .build())
+                .build();
+    }
+
+    public static CDReport apply(CDAttributes attributes) {
+        return CDReport.builder()
+                .district(attributes.getJPT_NAZWA_())
+                .province(attributes.getWOJEWODZTWO())
+                .reportDate(new Date())
+                .general(CDGeneral.builder()
+                        .population(attributes.getPOPULACJA())
+                        .quarantine(attributes.getKWARANTANNA())
+                        .build())
+                .today(CDToday.builder()
+                        .infections(attributes.getPOTWIERDZONE_DZIENNE())
+                        .infectionRatioPer10kPopulation(attributes.getPOTWIERDZONE_10_TYS_OSOB())
+                        .recovered(attributes.getLICZBA_OZDROWIENCOW())
+                        .deaths(CDDeath.builder()
+                                .deaths(attributes.getZGONY())
+                                .covid(attributes.getZGONY_COVID())
+                                .coexistent(attributes.getZGONY_WSPOLISTNIEJACE())
+                                .build())
+                        .tests(CDTest.builder()
+                                .all(attributes.getTESTY())
+                                .positive(attributes.getTESTY_POZYTYWNE())
+                                .negative(attributes.getTESTY_NEGATYWNE())
+                                .poz(attributes.getZLECENIA_POZ())
+                                .other(attributes.getTESTY_POZOSTALE())
                                 .build())
                         .build())
                 .build();

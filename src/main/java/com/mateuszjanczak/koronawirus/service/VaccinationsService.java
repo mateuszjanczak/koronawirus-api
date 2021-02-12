@@ -68,7 +68,7 @@ public class VaccinationsService implements IVaccinationsService {
             VGRoot response = call.execute().body();
             VGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return VaccinationsMapper.apply(attributes);
-        } catch (IOException | NullPointerException e) {
+        } catch (IOException | NullPointerException | ArrayIndexOutOfBoundsException e) {
             throw new ApiErrorException();
         }
     }

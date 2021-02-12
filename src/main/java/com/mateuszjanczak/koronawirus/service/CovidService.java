@@ -69,7 +69,7 @@ public class CovidService implements ICovidService {
             CGRoot response = call.execute().body();
             CGAttributes CGAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return CovidMapper.apply(CGAttributes);
-        } catch (IOException | NullPointerException e) {
+        } catch (IOException | NullPointerException | ArrayIndexOutOfBoundsException e) {
             throw new ApiErrorException();
         }
     }

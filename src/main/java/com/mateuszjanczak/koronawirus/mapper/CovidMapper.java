@@ -1,7 +1,6 @@
 package com.mateuszjanczak.koronawirus.mapper;
 
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
 import com.mateuszjanczak.koronawirus.model.covid.district.*;

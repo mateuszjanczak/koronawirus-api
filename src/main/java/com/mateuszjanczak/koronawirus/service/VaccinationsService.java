@@ -1,14 +1,13 @@
 package com.mateuszjanczak.koronawirus.service;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.ExtendedRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VaccinationsDistrictAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VaccinationsGeneralAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VaccinationsProvinceAPI;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
@@ -60,13 +59,13 @@ public class VaccinationsService implements IVaccinationsService {
     @Override
     public VGReport getDailyReport() {
 
-        Call<VGRoot> call = vaccinationsGeneralAPI.getDailyReport();
+        Call<Root<VGAttributes>> call = vaccinationsGeneralAPI.getDailyReport();
 
         try {
-            VGRoot response = call.execute().body();
+            Root<VGAttributes> response = call.execute().body();
             VGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return VaccinationsMapper.apply(attributes);
-        } catch (IOException | NullPointerException | ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
             throw new ApiErrorException();
         }
     }
@@ -84,10 +83,10 @@ public class VaccinationsService implements IVaccinationsService {
         }
 
         String condition = "Data BETWEEN '" + from + "' AND '"  + to + "'";
-        Call<VGRoot> call = vaccinationsGeneralAPI.getCustomReport(condition);
+        Call<Root<VGAttributes>> call = vaccinationsGeneralAPI.getCustomReport(condition);
 
         try {
-            VGRoot response = call.execute().body();
+            Root<VGAttributes> response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
@@ -104,10 +103,10 @@ public class VaccinationsService implements IVaccinationsService {
     @Override
     public List<VPReport> getAllProvinceReports() {
 
-        Call<VPRoot> call = vaccinationsProvinceAPI.getAllReports();
+        Call<ExtendedRoot<VPAttributes>> call = vaccinationsProvinceAPI.getAllReports();
 
         try {
-            VPRoot response = call.execute().body();
+            ExtendedRoot<VPAttributes> response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
@@ -126,10 +125,10 @@ public class VaccinationsService implements IVaccinationsService {
 
         String condition = "jpt_nazwa_ = '" + province + "'";
 
-        Call<VPRoot> call = vaccinationsProvinceAPI.getCustomReport(condition);
+        Call<ExtendedRoot<VPAttributes>> call = vaccinationsProvinceAPI.getCustomReport(condition);
 
         try {
-            VPRoot response = call.execute().body();
+            ExtendedRoot<VPAttributes> response = call.execute().body();
             VPAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return VaccinationsMapper.apply(attributes);
         } catch (IndexOutOfBoundsException e) {
@@ -141,10 +140,10 @@ public class VaccinationsService implements IVaccinationsService {
 
     @Override
     public List<VDReport> getAllDistrictReports() {
-        Call<VDRoot> call = vaccinationsDistrictAPI.getAllReports();
+        Call<ExtendedRoot<VDAttributes>> call = vaccinationsDistrictAPI.getAllReports();
 
         try {
-            VDRoot response = call.execute().body();
+            ExtendedRoot<VDAttributes> response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
@@ -162,10 +161,10 @@ public class VaccinationsService implements IVaccinationsService {
 
         String condition = "jpt_nazwa_ = '" + district + "' ";
 
-        Call<VDRoot> call = vaccinationsDistrictAPI.getCustomReport(condition);
+        Call<ExtendedRoot<VDAttributes>> call = vaccinationsDistrictAPI.getCustomReport(condition);
 
         try {
-            VDRoot response = call.execute().body();
+            ExtendedRoot<VDAttributes> response = call.execute().body();
             VDAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return VaccinationsMapper.apply(attributes);
         } catch (IndexOutOfBoundsException e) {

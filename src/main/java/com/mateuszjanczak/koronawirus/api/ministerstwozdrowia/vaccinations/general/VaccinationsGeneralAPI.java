@@ -1,13 +1,14 @@
 package com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface VaccinationsGeneralAPI {
-    @GET("query?f=json&outFields=*&where=Data%20BETWEEN%20(CURRENT_TIMESTAMP%20-%20INTERVAL%20%2748%27%20HOUR)%20AND%20CURRENT_TIMESTAMP&returnGeometry=false")
-    Call<VGRoot> getDailyReport();
+    @GET("query?f=json&where=1=1&outFields=*&returnGeometry=false&orderByFields=objectid%20desc&resultRecordCount=1")
+    Call<Root<VGAttributes>> getDailyReport();
 
     @GET("query?f=json&outFields=*&returnGeometry=false")
-    Call<VGRoot> getCustomReport(@Query("where") String condition);
+    Call<Root<VGAttributes>> getCustomReport(@Query("where") String condition);
 }

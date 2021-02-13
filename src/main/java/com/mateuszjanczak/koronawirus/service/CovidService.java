@@ -1,17 +1,14 @@
 package com.mateuszjanczak.koronawirus.service;
 
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CovidDistrictAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CovidGeneralAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPFeature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CovidProvinceAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.ExtendedRoot;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
 import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
@@ -63,13 +60,13 @@ public class CovidService implements ICovidService {
     @Override
     public CGReport getDailyReport() {
 
-        Call<CGRoot> call = covidGeneralAPI.getDailyReport();
+        Call<Root<CGAttributes>> call = covidGeneralAPI.getDailyReport();
 
         try {
-            CGRoot response = call.execute().body();
+            Root<CGAttributes> response = call.execute().body();
             CGAttributes CGAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return CovidMapper.apply(CGAttributes);
-        } catch (IOException | NullPointerException | ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
             throw new ApiErrorException();
         }
     }
@@ -87,15 +84,15 @@ public class CovidService implements ICovidService {
         }
 
         String condition = "Data BETWEEN '" + from + "' AND '"  + to + "'";
-        Call<CGRoot> call = covidGeneralAPI.getCustomReport(condition);
+        Call<Root<CGAttributes>> call = covidGeneralAPI.getCustomReport(condition);
 
         try {
-            CGRoot response = call.execute().body();
+            Root<CGAttributes> response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CGFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -108,10 +105,10 @@ public class CovidService implements ICovidService {
 
         String condition = "jpt_nazwa_ = '" + voivodeship + "' OR Nazwa_filter = '" + voivodeship + "'";
 
-        Call<CPRoot> call = covidProvinceAPI.getCustomReport(condition);
+        Call<ExtendedRoot<CPAttributes>> call = covidProvinceAPI.getCustomReport(condition);
 
         try {
-            CPRoot response = call.execute().body();
+            ExtendedRoot<CPAttributes> response = call.execute().body();
             CPAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return CovidMapper.apply(attributes);
         } catch (IndexOutOfBoundsException e) {
@@ -125,15 +122,15 @@ public class CovidService implements ICovidService {
     @Override
     public List<CPReport> getAllProvinceReports() {
 
-        Call<CPRoot> call = covidProvinceAPI.getAllReports();
+        Call<ExtendedRoot<CPAttributes>> call = covidProvinceAPI.getAllReports();
 
         try {
-            CPRoot response = call.execute().body();
+            ExtendedRoot<CPAttributes> response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CPFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -144,15 +141,15 @@ public class CovidService implements ICovidService {
     @Override
     public List<CDReport> getAllDistrictReports() {
 
-        Call<CDRoot> call = covidDistrictAPI.getAllReports();
+        Call<ExtendedRoot<CDAttributes>> call = covidDistrictAPI.getAllReports();
 
         try {
-            CDRoot response = call.execute().body();
+            ExtendedRoot<CDAttributes> response = call.execute().body();
             return Objects
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CDFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -165,10 +162,10 @@ public class CovidService implements ICovidService {
 
         String condition = "jpt_nazwa_ = '" + district + "' ";
 
-        Call<CDRoot> call = covidDistrictAPI.getCustomReport(condition);
+        Call<ExtendedRoot<CDAttributes>> call = covidDistrictAPI.getCustomReport(condition);
 
         try {
-            CDRoot response = call.execute().body();
+            ExtendedRoot<CDAttributes> response = call.execute().body();
             CDAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return CovidMapper.apply(attributes);
         } catch (IndexOutOfBoundsException e) {

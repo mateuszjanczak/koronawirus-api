@@ -1,17 +1,15 @@
 package com.mateuszjanczak.koronawirus.service;
 
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CovidDistrictAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CovidGeneralAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CovidProvinceAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
 import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
@@ -95,7 +93,7 @@ public class CovidService implements ICovidService {
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CGFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -133,7 +131,7 @@ public class CovidService implements ICovidService {
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CPFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -152,7 +150,7 @@ public class CovidService implements ICovidService {
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(CDFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {

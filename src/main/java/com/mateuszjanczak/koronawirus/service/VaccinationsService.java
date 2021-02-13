@@ -1,15 +1,13 @@
 package com.mateuszjanczak.koronawirus.service;
 
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VaccinationsDistrictAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VaccinationsGeneralAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPFeature;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPRoot;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VaccinationsProvinceAPI;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
@@ -94,7 +92,7 @@ public class VaccinationsService implements IVaccinationsService {
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(VGFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -114,7 +112,7 @@ public class VaccinationsService implements IVaccinationsService {
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(VPFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
@@ -151,7 +149,7 @@ public class VaccinationsService implements IVaccinationsService {
                     .requireNonNull(response)
                     .getFeatures()
                     .stream()
-                    .map(VDFeature::getAttributes)
+                    .map(Feature::getAttributes)
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {

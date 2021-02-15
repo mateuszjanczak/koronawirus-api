@@ -38,19 +38,19 @@ public class CovidService implements ICovidService {
 
     public CovidService() {
         this.covidGeneralAPI = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/global_corona_widok2/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_corona_widok2/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(CovidGeneralAPI.class);
 
         this.covidProvinceAPI = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/wojewodztwa_corona_widok/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/wojewodztwa_corona_widok/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(CovidProvinceAPI.class);
 
         this.covidDistrictAPI = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/powiaty_corona_widok_woj/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/powiaty_corona_widok_woj/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(CovidDistrictAPI.class);

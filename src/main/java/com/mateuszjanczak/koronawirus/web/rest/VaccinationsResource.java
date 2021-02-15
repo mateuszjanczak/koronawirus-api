@@ -2,6 +2,7 @@ package com.mateuszjanczak.koronawirus.web.rest;
 
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;
+import com.mateuszjanczak.koronawirus.model.vaccinations.points.VPPReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
 import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
 import org.springframework.http.HttpStatus;
@@ -58,4 +59,18 @@ public class VaccinationsResource {
     VDReport getReportByDistrict(@PathVariable String name) {
         return vaccinationsService.getReportByDistrict(name);
     }
+
+    @GetMapping("/point")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<VPPReport> getAllPointsReports() {
+        return vaccinationsService.getAllPointsReports();
+    }
+
+    @GetMapping("/point/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    VPPReport getReportByName(@PathVariable String name) {
+        return vaccinationsService.getReportByName(name);
+    }
+
 }

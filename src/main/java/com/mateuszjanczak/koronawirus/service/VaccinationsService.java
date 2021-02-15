@@ -38,19 +38,19 @@ public class VaccinationsService implements IVaccinationsService {
 
     public VaccinationsService() {
         this.vaccinationsGeneralAPI = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/arcgis/rest/services/global_szczepienia_widok3/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_szczepienia_widok3/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VaccinationsGeneralAPI.class);
 
         this.vaccinationsProvinceAPI = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/wojewodztwa_szczepienia_widok3/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/wojewodztwa_szczepienia_widok3/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VaccinationsProvinceAPI.class);
 
         this.vaccinationsDistrictAPI = new Retrofit.Builder()
-                .baseUrl("https://services9.arcgis.com/RykcEgwHWuMsJXPj/ArcGIS/rest/services/powiaty_szczepienia_widok/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/powiaty_szczepienia_widok/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VaccinationsDistrictAPI.class);

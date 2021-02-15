@@ -27,5 +27,6 @@ public class TestResource {
         vaccinationsService.getDailyReport();
         vaccinationsService.getAllDistrictReports();
         vaccinationsService.getAllProvinceReports();
+        vaccinationsService.getAllPointsReports();
     }
 }

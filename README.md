@@ -266,3 +266,33 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarno
   }
 }
 ```
+
+#### Raporty - punkty szczepień
+```
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/point
+GET https://koronawirus-api.herokuapp.com/api/vaccinations/point/ZESPÓŁ OPIEKI ZDROWOTNEJ W DĄBROWIE TARNOWSKIEJ
+```
+```json
+{
+  "name": "ZESPÓŁ OPIEKI ZDROWOTNEJ W DĄBROWIE TARNOWSKIEJ",
+  "location": {
+    "coordinates": {
+      "x": 20.9926472694905,
+      "y": 50.1772668373536
+    },
+    "address": "SZPITALNA 1",
+    "city": "DĄBROWA TARNOWSKA"
+  },
+  "contact": {
+    "phone": "14 64 43 282",
+    "email": "bparka@zozdt.pl",
+    "nfz": "06"
+  },
+  "general": {
+    "vaccinations": 198
+  },
+  "today": {
+    "vaccinations": 30
+  }
+}
+```

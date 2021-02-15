@@ -7,6 +7,8 @@ import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.distr
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VaccinationsDistrictAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VaccinationsGeneralAPI;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.points.VPPAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.points.VaccinationsPointsAPI;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VaccinationsProvinceAPI;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
@@ -15,6 +17,7 @@ import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
 import com.mateuszjanczak.koronawirus.mapper.VaccinationsMapper;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;
+import com.mateuszjanczak.koronawirus.model.vaccinations.points.VPPReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
 import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
 import org.apache.commons.lang3.time.DateUtils;
@@ -35,6 +38,7 @@ public class VaccinationsService implements IVaccinationsService {
     private final VaccinationsGeneralAPI vaccinationsGeneralAPI;
     private final VaccinationsProvinceAPI vaccinationsProvinceAPI;
     private final VaccinationsDistrictAPI vaccinationsDistrictAPI;
+    private final VaccinationsPointsAPI vaccinationsPointsAPI;
 
     public VaccinationsService() {
         this.vaccinationsGeneralAPI = new Retrofit.Builder()
@@ -54,6 +58,12 @@ public class VaccinationsService implements IVaccinationsService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VaccinationsDistrictAPI.class);
+
+        this.vaccinationsPointsAPI = new Retrofit.Builder()
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/punkty_szczepien_widok/FeatureServer/0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(VaccinationsPointsAPI.class);
     }
 
     @Override
@@ -166,6 +176,43 @@ public class VaccinationsService implements IVaccinationsService {
         try {
             ExtendedRoot<VDAttributes> response = call.execute().body();
             VDAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            return VaccinationsMapper.apply(attributes);
+        } catch (IndexOutOfBoundsException e) {
+            throw new BadVoivodeshipNameException();
+        } catch (IOException | NullPointerException e) {
+            throw new ApiErrorException();
+        }
+    }
+
+    @Override
+    public List<VPPReport> getAllPointsReports() {
+        Call<ExtendedRoot<VPPAttributes>> call = vaccinationsPointsAPI.getAllReports();
+
+        try {
+            ExtendedRoot<VPPAttributes> response = call.execute().body();
+            return Objects
+                    .requireNonNull(response)
+                    .getFeatures()
+                    .stream()
+                    .skip(1)
+                    .map(Feature::getAttributes)
+                    .map(VaccinationsMapper::apply)
+                    .collect(Collectors.toList());
+        } catch (IOException | NullPointerException e) {
+            throw new ApiErrorException();
+        }
+    }
+
+    @Override
+    public VPPReport getReportByName(String name) {
+
+        String condition = "NAZWA = '" + name + "' ";
+
+        Call<ExtendedRoot<VPPAttributes>> call = vaccinationsPointsAPI.getCustomReport(condition);
+
+        try {
+            ExtendedRoot<VPPAttributes> response = call.execute().body();
+            VPPAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             return VaccinationsMapper.apply(attributes);
         } catch (IndexOutOfBoundsException e) {
             throw new BadVoivodeshipNameException();

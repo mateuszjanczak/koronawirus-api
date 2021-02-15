@@ -2,11 +2,13 @@ package com.mateuszjanczak.koronawirus.mapper;
 
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
+import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.points.VPPAttributes;
 import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDGeneral;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDToday;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.*;
+import com.mateuszjanczak.koronawirus.model.vaccinations.points.*;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPGeneral;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPToday;
@@ -89,6 +91,31 @@ public class VaccinationsMapper {
                         .secondDoses(attributes.getDAWKA_2_DZIENNIE())
                         .build()
                 )
+                .build();
+    }
+
+    public static VPPReport apply(VPPAttributes attributes) {
+        return VPPReport.builder()
+                .name(attributes.getNAZWA())
+                .location(VPPLocation.builder()
+                        .coordinates(VPPCoordinates.builder()
+                                .x(attributes.getX())
+                                .y(attributes.getY())
+                                .build())
+                        .address(attributes.getADRES())
+                        .city(attributes.getMIEJSCOWOSC())
+                        .build())
+                .contact(VPPContact.builder()
+                        .phone(attributes.getTELEFON())
+                        .email(attributes.getADRES_E_MAIL())
+                        .nfz(attributes.getODDZIAL_NFZ())
+                        .build())
+                .general(VPPGeneral.builder()
+                        .vaccinations(attributes.getSZCZEPIENIA_SUMA())
+                        .build())
+                .today(VPPToday.builder()
+                        .vaccinations(attributes.getSZCZEPIENIA_DZIENNE())
+                        .build())
                 .build();
     }
 }

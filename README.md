@@ -1,5 +1,5 @@
 # Koronawirus (Web scraper + API)
-![Uptime Robot status](https://badgen.net/uptime-robot/status/m786471510-2e54e382298ad7aab274ab8d)
+[![Uptime Robot status](https://badgen.net/uptime-robot/status/m786471510-2e54e382298ad7aab274ab8d)](https://stats.uptimerobot.com/g7vQlFlv46)
 ![Uptime Robot 24h](https://badgen.net/uptime-robot/day/m786471510-2e54e382298ad7aab274ab8d)
 ![Uptime Robot 7d](https://badgen.net/uptime-robot/week/m786471510-2e54e382298ad7aab274ab8d)
 ![Uptime Robot 30d](https://badgen.net/uptime-robot/month/m786471510-2e54e382298ad7aab274ab8d)

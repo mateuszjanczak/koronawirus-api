@@ -66,6 +66,8 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VaccinationsPointsAPI.class);
+
+        fetchAll();
     }
 
 

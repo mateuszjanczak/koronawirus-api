@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.mateuszjanczak.koronawirus.web.rest.TestResource.*;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/api/covid19")
+@RequestMapping(COVID_API)
 public class CovidResource {
 
     private final ICovidService covidService;
@@ -20,42 +22,42 @@ public class CovidResource {
         this.covidService = covidService;
     }
 
-    @GetMapping("/daily")
+    @GetMapping(PATH_GET_DAILY_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     CGReport getDailyReport() {
         return covidService.getDailyReport();
     }
 
-    @GetMapping("/from/{from}/to/{to}")
+    @GetMapping(PATH_GET_PERIODIC_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<CGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
         return covidService.getPeriodicReport(from, to);
     }
 
-    @GetMapping("/province")
+    @GetMapping(PATH_GET_ALL_PROVINCE_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<CPReport> getAllProvinceReports() {
         return covidService.getAllProvinceReports();
     }
 
-    @GetMapping("/province/{name}")
+    @GetMapping(PATH_GET_SINGLE_PROVINCE_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     CPReport getReportByProvince(@PathVariable String name) {
         return covidService.getReportByProvince(name);
     }
 
-    @GetMapping("/district")
+    @GetMapping(PATH_GET_ALL_DISTRICT_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<CDReport> getAllDistrictReports() {
         return covidService.getAllDistrictReports();
     }
 
-    @GetMapping("/district/{name}")
+    @GetMapping(PATH_GET_SINGLE_DISTRICT_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     CDReport getReportByDistrict(@PathVariable String name) {

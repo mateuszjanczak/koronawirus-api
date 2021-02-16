@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.mateuszjanczak.koronawirus.web.rest.TestResource.*;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/api/vaccinations")
+@RequestMapping(VACCINATIONS_API)
 public class VaccinationsResource {
 
     final private IVaccinationsService vaccinationsService;
@@ -21,56 +23,56 @@ public class VaccinationsResource {
         this.vaccinationsService = vaccinationsService;
     }
 
-    @GetMapping("/daily")
+    @GetMapping(PATH_GET_DAILY_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     VGReport getDailyReport() {
         return vaccinationsService.getDailyReport();
     }
 
-    @GetMapping("/from/{from}/to/{to}")
+    @GetMapping(PATH_GET_PERIODIC_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<VGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
         return vaccinationsService.getPeriodicReport(from, to);
     }
 
-    @GetMapping("/province")
+    @GetMapping(PATH_GET_ALL_PROVINCE_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<VPReport> getAllProvinceReports() {
         return vaccinationsService.getAllProvinceReports();
     }
 
-    @GetMapping("/province/{name}")
+    @GetMapping(PATH_GET_SINGLE_PROVINCE_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     VPReport getReportByProvince(@PathVariable String name) {
         return vaccinationsService.getReportByProvince(name);
     }
 
-    @GetMapping("/district")
+    @GetMapping(PATH_GET_ALL_DISTRICT_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<VDReport> getAllDistrictReports() {
         return vaccinationsService.getAllDistrictReports();
     }
 
-    @GetMapping("/district/{name}")
+    @GetMapping(PATH_GET_SINGLE_DISTRICT_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     VDReport getReportByDistrict(@PathVariable String name) {
         return vaccinationsService.getReportByDistrict(name);
     }
 
-    @GetMapping("/point")
+    @GetMapping(PATH_GET_ALL_POINT_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     List<VPPReport> getAllPointsReports() {
         return vaccinationsService.getAllPointsReports();
     }
 
-    @GetMapping("/point/{name}")
+    @GetMapping(PATH_GET_SINGLE_POINT_REPORT)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     VPPReport getReportByName(@PathVariable String name) {

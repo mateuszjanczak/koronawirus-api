@@ -3,7 +3,6 @@ package com.mateuszjanczak.koronawirus.web.rest;
 import com.mateuszjanczak.koronawirus.model.covid.district.CDReport;
 import com.mateuszjanczak.koronawirus.model.covid.global.CGReport;
 import com.mateuszjanczak.koronawirus.model.covid.province.CPReport;
-import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +29,15 @@ public class CovidResource {
 
     @GetMapping("/from/{from}/to/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<CGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
+    public @ResponseBody
+    List<CGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
         return covidService.getPeriodicReport(from, to);
     }
 
     @GetMapping("/province")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<CPReport> getAllProvinceReports() {
+    public @ResponseBody
+    List<CPReport> getAllProvinceReports() {
         return covidService.getAllProvinceReports();
     }
 
@@ -49,7 +50,8 @@ public class CovidResource {
 
     @GetMapping("/district")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<CDReport> getAllDistrictReports() {
+    public @ResponseBody
+    List<CDReport> getAllDistrictReports() {
         return covidService.getAllDistrictReports();
     }
 

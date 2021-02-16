@@ -1,4 +1,5 @@
 # Koronawirus (Web scraper + API)
+
 [![Uptime Robot status](https://badgen.net/uptime-robot/status/m786471510-2e54e382298ad7aab274ab8d)](https://stats.uptimerobot.com/g7vQlFlv46)
 ![Uptime Robot 24h](https://badgen.net/uptime-robot/day/m786471510-2e54e382298ad7aab274ab8d)
 ![Uptime Robot 7d](https://badgen.net/uptime-robot/week/m786471510-2e54e382298ad7aab274ab8d)
@@ -11,12 +12,15 @@ https://koronawirus-api.herokuapp.com/api/covid19/daily
 ### Endpointy
 
 ### Koronawirus
+
 #### Raporty - kraj
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/covid19/daily
 GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01/to/2021-02-08/
 GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
+
 ```json
 {
   "reportDate": "2021-02-09T09:30:18.061+0000",
@@ -75,10 +79,12 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01 00:00/to/2
 ```
 
 #### Raporty - województwo
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/covid19/province
 GET https://koronawirus-api.herokuapp.com/api/covid19/province/małopolskie
 ```
+
 ```json
 {
   "province": "małopolskie",
@@ -110,10 +116,12 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/province/małopolskie
 ```
 
 #### Raporty - powiat
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/covid19/district
 GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
 ```
+
 ```json
 {
   "district": "powiat tarnowski",
@@ -144,12 +152,15 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
 ```
 
 ### Szczepienia
+
 #### Raporty - kraj
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/daily
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01/to/2021-02-08/
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
+
 ```json
 {
   "reportDate": "2021-02-09T09:30:13.022+0000",
@@ -222,10 +233,12 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01 00:00
 ```
 
 #### Raporty - województwo
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/province
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/province/małopolskie
 ```
+
 ```json
 {
   "province": "małopolskie",
@@ -245,10 +258,12 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/province/małopolskie
 ```
 
 #### Raporty - powiat
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/district
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarnowski
 ```
+
 ```json
 {
   "district": "powiat tarnowski",
@@ -268,10 +283,12 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarno
 ```
 
 #### Raporty - punkty szczepień
+
 ```
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/point
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/point/ZESPÓŁ OPIEKI ZDROWOTNEJ W DĄBROWIE TARNOWSKIEJ
 ```
+
 ```json
 {
   "name": "ZESPÓŁ OPIEKI ZDROWOTNEJ W DĄBROWIE TARNOWSKIEJ",

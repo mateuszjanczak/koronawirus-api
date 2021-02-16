@@ -20,7 +20,8 @@ public class TestResource {
 
     @GetMapping("/test")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody void test(){
+    public @ResponseBody
+    void test() {
         covidService.getDailyReport();
         covidService.getAllDistrictReports();
         covidService.getAllProvinceReports();

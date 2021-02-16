@@ -1,26 +1,29 @@
-package com.mateuszjanczak.koronawirus.service.interfaces;
+package com.mateuszjanczak.koronawirus.repository;
 
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.points.VPPReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.province.VPReport;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-public interface IVaccinationsService {
+public interface IVaccinationsRepository {
+
     VGReport getDailyReport();
 
-    List<VGReport> getPeriodicReport(String from, String to);
+    List<VGReport> getPeriodicReport(Date from, Date to);
 
     List<VPReport> getAllProvinceReports();
 
-    VPReport getReportByProvince(String province);
+    Optional<VPReport> getReportByProvince(String province);
 
     List<VDReport> getAllDistrictReports();
 
-    VDReport getReportByDistrict(String district);
+    Optional<VDReport> getReportByDistrict(String district);
 
-    List<VPPReport> getAllPointsReports();
+    List<VPPReport> getAllPointReports();
 
-    VPPReport getReportByPoint(String point);
+    Optional<VPPReport> getReportByPoint(String point);
 }

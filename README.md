@@ -1,9 +1,10 @@
 # Koronawirus (Web scraper + API)
 
-[![Uptime Robot status](https://badgen.net/uptime-robot/status/m786471510-2e54e382298ad7aab274ab8d)](https://stats.uptimerobot.com/g7vQlFlv46)
-![Uptime Robot 24h](https://badgen.net/uptime-robot/day/m786471510-2e54e382298ad7aab274ab8d)
-![Uptime Robot 7d](https://badgen.net/uptime-robot/week/m786471510-2e54e382298ad7aab274ab8d)
-![Uptime Robot 30d](https://badgen.net/uptime-robot/month/m786471510-2e54e382298ad7aab274ab8d)
+[![Uptime Robot status](https://badgen.net/uptime-robot/status/m787258660-5597da29bb779a9b5030bf08)](https://stats.uptimerobot.com/vmO9EsWJBx)
+[![Uptime Robot day](https://badgen.net/uptime-robot/day/m787258660-5597da29bb779a9b5030bf08)](https://stats.uptimerobot.com/vmO9EsWJBx)
+[![Uptime Robot week](https://badgen.net/uptime-robot/week/m787258660-5597da29bb779a9b5030bf08)](https://stats.uptimerobot.com/vmO9EsWJBx)
+[![Uptime Robot month](https://badgen.net/uptime-robot/month/m787258660-5597da29bb779a9b5030bf08)](https://stats.uptimerobot.com/vmO9EsWJBx)
+[![Uptime Robot response](https://badgen.net/uptime-robot/response/m787258660-5597da29bb779a9b5030bf08)](https://stats.uptimerobot.com/vmO9EsWJBx)
 
 Web scraper do pozyskiwania informacji o statystykach koronawirusa ze strony ministerstwa zdrowia.
 

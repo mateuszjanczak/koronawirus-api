@@ -6,6 +6,7 @@
 ![Uptime Robot 30d](https://badgen.net/uptime-robot/month/m786471510-2e54e382298ad7aab274ab8d)
 
 Web scraper do pozyskiwania informacji o statystykach koronawirusa ze strony ministerstwa zdrowia.
+Dane są odświeżane co 15 minut.
 
 https://koronawirus-api.herokuapp.com/api/covid19/daily
 
@@ -312,4 +313,10 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/point/ZESPÓŁ OPIEKI
     "vaccinations": 30
   }
 }
+```
+
+#### Force Update
+
+```
+GET http://localhost:8080/forceUpdate
 ```

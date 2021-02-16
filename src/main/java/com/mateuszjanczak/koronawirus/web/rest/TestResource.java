@@ -1,5 +1,6 @@
 package com.mateuszjanczak.koronawirus.web.rest;
 
+import com.mateuszjanczak.koronawirus.repository.ICache;
 import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
 import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestResource {
     private final ICovidService covidService;
     private final IVaccinationsService vaccinationsService;
+    private final ICache covidRepository;
+    private final ICache vaccinationsRepository;
 
-    public TestResource(ICovidService covidService, IVaccinationsService vaccinationsService) {
+    public TestResource(ICovidService covidService, IVaccinationsService vaccinationsService, ICache covidRepository, ICache vaccinationsRepository) {
         this.covidService = covidService;
         this.vaccinationsService = vaccinationsService;
+        this.covidRepository = covidRepository;
+        this.vaccinationsRepository = vaccinationsRepository;
     }
 
     @GetMapping("/test")
@@ -29,5 +34,13 @@ public class TestResource {
         vaccinationsService.getAllDistrictReports();
         vaccinationsService.getAllProvinceReports();
         vaccinationsService.getAllPointsReports();
+    }
+
+    @GetMapping("/forceUpdate")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    void forceUpdate() {
+        covidRepository.fetchAll();
+        vaccinationsRepository.fetchAll();
     }
 }

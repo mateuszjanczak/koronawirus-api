@@ -1,177 +1,68 @@
 package com.mateuszjanczak.koronawirus.service;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CovidDistrictAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CovidGeneralAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CovidProvinceAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.ExtendedRoot;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
-import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.exception.BadDateFormatException;
-import com.mateuszjanczak.koronawirus.exception.BadVoivodeshipNameException;
-import com.mateuszjanczak.koronawirus.mapper.CovidMapper;
+import com.mateuszjanczak.koronawirus.exception.BadDistrictNameException;
+import com.mateuszjanczak.koronawirus.exception.BadProvinceNameException;
 import com.mateuszjanczak.koronawirus.model.covid.district.CDReport;
 import com.mateuszjanczak.koronawirus.model.covid.global.CGReport;
 import com.mateuszjanczak.koronawirus.model.covid.province.CPReport;
+import com.mateuszjanczak.koronawirus.repository.ICovidRepository;
 import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class CovidService implements ICovidService {
 
-    private final CovidGeneralAPI covidGeneralAPI;
-    private final CovidProvinceAPI covidProvinceAPI;
-    private final CovidDistrictAPI covidDistrictAPI;
+    private final ICovidRepository covidRepository;
 
-    public CovidService() {
-        this.covidGeneralAPI = new Retrofit.Builder()
-                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_corona_widok2/FeatureServer/0/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(CovidGeneralAPI.class);
-
-        this.covidProvinceAPI = new Retrofit.Builder()
-                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/wojewodztwa_corona_widok/FeatureServer/0/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(CovidProvinceAPI.class);
-
-        this.covidDistrictAPI = new Retrofit.Builder()
-                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/powiaty_corona_widok_woj/FeatureServer/0/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(CovidDistrictAPI.class);
+    public CovidService(ICovidRepository covidRepository) {
+        this.covidRepository = covidRepository;
     }
-
 
     @Override
     public CGReport getDailyReport() {
-
-        Call<Root<CGAttributes>> call = covidGeneralAPI.getDailyReport();
-
-        try {
-            Root<CGAttributes> response = call.execute().body();
-            CGAttributes CGAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            return CovidMapper.apply(CGAttributes);
-        } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
-            throw new ApiErrorException();
-        }
+        return covidRepository.getDailyReport();
     }
 
     @Override
     public List<CGReport> getPeriodicReport(String from, String to) {
 
-        String[] acceptedFormats = {"yyyy-MM-dd","yyyy-MM-dd HH:mm"};
+        String[] acceptedFormats = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm"};
+        Date fromDate;
+        Date toDate;
 
         try {
-            DateUtils.parseDate(from, acceptedFormats);
-            DateUtils.parseDate(to, acceptedFormats);
+            fromDate = DateUtils.parseDate(from, acceptedFormats);
+            toDate = DateUtils.parseDate(to, acceptedFormats);
         } catch (ParseException e) {
             throw new BadDateFormatException();
         }
 
-        String condition = "Data BETWEEN '" + from + "' AND '"  + to + "'";
-        Call<Root<CGAttributes>> call = covidGeneralAPI.getCustomReport(condition);
-
-        try {
-            Root<CGAttributes> response = call.execute().body();
-            return Objects
-                    .requireNonNull(response)
-                    .getFeatures()
-                    .stream()
-                    .map(Feature::getAttributes)
-                    .map(CovidMapper::apply)
-                    .collect(Collectors.toList());
-        } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
-        }
+        return covidRepository.getPeriodicReport(fromDate, toDate);
     }
 
     @Override
-    public CPReport getReportByProvince(String voivodeship) {
-
-        String condition = "jpt_nazwa_ = '" + voivodeship + "' OR Nazwa_filter = '" + voivodeship + "'";
-
-        Call<ExtendedRoot<CPAttributes>> call = covidProvinceAPI.getCustomReport(condition);
-
-        try {
-            ExtendedRoot<CPAttributes> response = call.execute().body();
-            CPAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            return CovidMapper.apply(attributes);
-        } catch (IndexOutOfBoundsException e) {
-            throw new BadVoivodeshipNameException();
-        } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
-        }
-
+    public CPReport getReportByProvince(String province) {
+        return covidRepository.getReportByProvince(province).orElseThrow(BadProvinceNameException::new);
     }
 
     @Override
     public List<CPReport> getAllProvinceReports() {
-
-        Call<ExtendedRoot<CPAttributes>> call = covidProvinceAPI.getAllReports();
-
-        try {
-            ExtendedRoot<CPAttributes> response = call.execute().body();
-            return Objects
-                    .requireNonNull(response)
-                    .getFeatures()
-                    .stream()
-                    .map(Feature::getAttributes)
-                    .map(CovidMapper::apply)
-                    .collect(Collectors.toList());
-        } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
-        }
-    }
-
-    @Override
-    public List<CDReport> getAllDistrictReports() {
-
-        Call<ExtendedRoot<CDAttributes>> call = covidDistrictAPI.getAllReports();
-
-        try {
-            ExtendedRoot<CDAttributes> response = call.execute().body();
-            return Objects
-                    .requireNonNull(response)
-                    .getFeatures()
-                    .stream()
-                    .map(Feature::getAttributes)
-                    .map(CovidMapper::apply)
-                    .collect(Collectors.toList());
-        } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
-        }
+        return covidRepository.getAllProvinceReports();
     }
 
     @Override
     public CDReport getReportByDistrict(String district) {
+        return covidRepository.getReportByDistrict(district).orElseThrow(BadDistrictNameException::new);
+    }
 
-        String condition = "jpt_nazwa_ = '" + district + "' ";
-
-        Call<ExtendedRoot<CDAttributes>> call = covidDistrictAPI.getCustomReport(condition);
-
-        try {
-            ExtendedRoot<CDAttributes> response = call.execute().body();
-            CDAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            return CovidMapper.apply(attributes);
-        } catch (IndexOutOfBoundsException e) {
-            throw new BadVoivodeshipNameException();
-        } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
-        }
+    @Override
+    public List<CDReport> getAllDistrictReports() {
+        return covidRepository.getAllDistrictReports();
     }
 }

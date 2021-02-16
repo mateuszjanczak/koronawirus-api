@@ -30,13 +30,15 @@ public class VaccinationsResource {
 
     @GetMapping("/from/{from}/to/{to}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<VGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
+    public @ResponseBody
+    List<VGReport> getPeriodicReport(@PathVariable String from, @PathVariable String to) {
         return vaccinationsService.getPeriodicReport(from, to);
     }
 
     @GetMapping("/province")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<VPReport> getAllProvinceReports() {
+    public @ResponseBody
+    List<VPReport> getAllProvinceReports() {
         return vaccinationsService.getAllProvinceReports();
     }
 
@@ -49,7 +51,8 @@ public class VaccinationsResource {
 
     @GetMapping("/district")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<VDReport> getAllDistrictReports() {
+    public @ResponseBody
+    List<VDReport> getAllDistrictReports() {
         return vaccinationsService.getAllDistrictReports();
     }
 
@@ -62,7 +65,8 @@ public class VaccinationsResource {
 
     @GetMapping("/point")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<VPPReport> getAllPointsReports() {
+    public @ResponseBody
+    List<VPPReport> getAllPointsReports() {
         return vaccinationsService.getAllPointsReports();
     }
 
@@ -70,7 +74,7 @@ public class VaccinationsResource {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     VPPReport getReportByName(@PathVariable String name) {
-        return vaccinationsService.getReportByName(name);
+        return vaccinationsService.getReportByPoint(name);
     }
 
 }

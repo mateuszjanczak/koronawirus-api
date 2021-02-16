@@ -118,7 +118,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
 
     @Override
     public List<VGReport> getPeriodicReport(Date from, Date to) {
-        return periodicReport.stream().filter(vgReport -> vgReport.getReportDate().before(from) && vgReport.getReportDate().after(to)).collect(Collectors.toList());
+        return periodicReport.stream().filter(vgReport -> vgReport.getReportDate().after(from) && vgReport.getReportDate().before(to)).collect(Collectors.toList());
     }
 
     public void fetchAllProvinceReports() {

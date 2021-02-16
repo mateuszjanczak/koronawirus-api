@@ -73,8 +73,8 @@ public class CovidRepository implements ICovidRepository, ICache {
 
         try {
             Root<CGAttributes> response = call.execute().body();
-            CGAttributes CGAttributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
-            dailyReport = CovidMapper.apply(CGAttributes);
+            CGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
+            dailyReport = CovidMapper.apply(attributes);
         } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
             throw new ApiErrorException();
         }
@@ -106,7 +106,7 @@ public class CovidRepository implements ICovidRepository, ICache {
 
     @Override
     public List<CGReport> getPeriodicReport(Date from, Date to) {
-        return periodicReport.stream().filter(cgReport -> cgReport.getReportDate().before(from) && cgReport.getReportDate().after(to)).collect(Collectors.toList());
+        return periodicReport.stream().filter(cgReport -> cgReport.getReportDate().after(from) && cgReport.getReportDate().before(to)).collect(Collectors.toList());
     }
 
     public void fetchAllProvinceReports() {

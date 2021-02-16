@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+
 @RestController
 public class TestResource {
     private final ICovidService covidService;
@@ -37,15 +40,30 @@ public class TestResource {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    void index() {
-        covidService.getDailyReport();
-        covidService.getAllDistrictReports();
-        covidService.getAllProvinceReports();
-        vaccinationsService.getDailyReport();
-        vaccinationsService.getAllDistrictReports();
-        vaccinationsService.getAllProvinceReports();
-        vaccinationsService.getAllPointsReports();
+    HashMap<String, HashMap<String, String>> index(HttpServletRequest request) {
+        HashMap<String, HashMap<String, String>> res = new HashMap<>();
+
+        HashMap<String, String> covid = new HashMap<>();
+        covid.put("getDailyReport", getCurrentUrl(request, COVID_API) + PATH_GET_DAILY_REPORT);
+        covid.put("getAllDistrictReports", getCurrentUrl(request, COVID_API) + PATH_GET_ALL_DISTRICT_REPORT);
+        covid.put("getAllProvinceReports", getCurrentUrl(request, COVID_API) + PATH_GET_ALL_PROVINCE_REPORT);
+        res.put("covid", covid);
+
+        HashMap<String, String> vaccinations = new HashMap<>();
+        vaccinations.put("getDailyReport", getCurrentUrl(request, VACCINATIONS_API) + PATH_GET_DAILY_REPORT);
+        vaccinations.put("getAllDistrictReports", getCurrentUrl(request, VACCINATIONS_API) + PATH_GET_ALL_DISTRICT_REPORT);
+        vaccinations.put("getAllProvinceReports", getCurrentUrl(request, VACCINATIONS_API) + PATH_GET_ALL_PROVINCE_REPORT);
+        vaccinations.put("getAllPointsReports", getCurrentUrl(request, VACCINATIONS_API) + PATH_GET_ALL_POINT_REPORT);
+        res.put("vaccinations", vaccinations);
+
+        return res;
     }
+
+    private String getCurrentUrl(HttpServletRequest request, String api) {
+        String requestUrl = request.getRequestURL().toString();
+        return requestUrl.substring(0, requestUrl.length() - 1) + api;
+    }
+
 
     @GetMapping("/test")
     @ResponseStatus(HttpStatus.OK)

@@ -23,10 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -77,7 +74,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
         fetchPeriodicReport();
         fetchAllProvinceReports();
         fetchAllDistrictReports();
-        //fetchAllPointReports();
+        fetchAllPointReports();
     }
 
     public void fetchDailyReport() {
@@ -178,7 +175,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
     }
 
     public void fetchAllPointReports() {
-        Call<ExtendedRoot<VPPAttributes>> call = vaccinationsPointsAPI.getAllReports();
+/*        Call<ExtendedRoot<VPPAttributes>> call = vaccinationsPointsAPI.getAllReports();
 
         try {
             ExtendedRoot<VPPAttributes> response = call.execute().body();
@@ -192,7 +189,8 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
             throw new ApiErrorException();
-        }
+        }*/
+        pointReport = Collections.emptyList();
     }
 
     @Override

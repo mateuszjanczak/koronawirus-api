@@ -77,7 +77,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
         fetchPeriodicReport();
         fetchAllProvinceReports();
         fetchAllDistrictReports();
-        fetchAllPointReports();
+        //fetchAllPointReports();
     }
 
     public void fetchDailyReport() {

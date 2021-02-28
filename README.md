@@ -285,7 +285,7 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarno
 }
 ```
 
-#### Raporty - punkty szczepień
+#### ~~Raporty - punkty szczepień~~
 
 ```
 GET https://koronawirus-api.herokuapp.com/api/vaccinations/point

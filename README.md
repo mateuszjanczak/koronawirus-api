@@ -166,71 +166,72 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01 00:00
 
 ```json
 {
-  "reportDate": "2021-02-09T09:30:13.022+0000",
+  "reportDate": "2021-03-19T09:30:14.753+0000",
   "general": {
-    "vaccinations": 1688465,
-    "firstDoses": 1226129,
-    "secondDoses": 462336,
-    "lostDoses": 3487,
-    "adverseReactions": 1487,
-    "vaccinesDeliveredToPL": 2432640,
-    "vaccinesDeliveredToPoints": 1971810,
-    "availabilityInStock": 460830,
+    "vaccinations": 4893320,
+    "firstDoses": 3162971,
+    "secondDoses": 1730349,
+    "lostDoses": 5879,
+    "adverseReactions": 5034,
+    "vaccinesDeliveredToPL": 5728100,
+    "vaccinesDeliveredToPoints": 4904750,
+    "availabilityInStock": 203270,
+    "ordersInProgress": 620080,
     "ageTypes": [
       {
         "ageType": "AR0_17",
-        "vaccinations": 0
+        "vaccinations": 1019
       },
       {
         "ageType": "AR18_30",
-        "vaccinations": 187411
+        "vaccinations": 325124
       },
       {
         "ageType": "AR31_40",
-        "vaccinations": 208538
+        "vaccinations": 427710
       },
       {
         "ageType": "AR41_50",
-        "vaccinations": 288425
+        "vaccinations": 589842
       },
       {
         "ageType": "AR51_60",
-        "vaccinations": 322200
+        "vaccinations": 608117
       },
       {
         "ageType": "AR61_70",
-        "vaccinations": 192729
+        "vaccinations": 558038
       },
       {
         "ageType": "AR71_75",
-        "vaccinations": 73050
+        "vaccinations": 691961
       },
       {
         "ageType": "AR75_",
-        "vaccinations": 412267
+        "vaccinations": 1685793
       },
       {
         "ageType": "AR_UNDEFINED",
-        "vaccinations": 3845
+        "vaccinations": 5716
       },
       {
         "ageType": "AG_FEMALE",
-        "vaccinations": 1175456
+        "vaccinations": 3241365
       },
       {
         "ageType": "AG_MALE",
-        "vaccinations": 509863
+        "vaccinations": 1646116
       },
       {
         "ageType": "AG_UNDEFINED",
-        "vaccinations": 3146
+        "vaccinations": 5839
       }
     ]
   },
   "today": {
-    "vaccinations": 30892,
-    "firstDoses": 19494,
-    "secondDoses": 11398
+    "vaccinations": 149828,
+    "firstDoses": 85201,
+    "secondDoses": 64627
   }
 }
 ```

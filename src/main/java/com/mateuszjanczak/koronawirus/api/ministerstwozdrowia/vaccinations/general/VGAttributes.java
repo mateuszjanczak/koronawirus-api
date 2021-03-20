@@ -57,4 +57,6 @@ public class VGAttributes {
     public int dAWKA_1_SUMA;
     @SerializedName("SUMA_DAWEK_POLSKA")
     public int sUMA_DAWEK_POLSKA;
+    @SerializedName("zamowienia_realizacja")
+    public int zamowienia_realizacja;
 }

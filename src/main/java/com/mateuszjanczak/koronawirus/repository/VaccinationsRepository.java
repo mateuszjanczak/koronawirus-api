@@ -41,7 +41,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
 
     public VaccinationsRepository() {
         this.vaccinationsGeneralAPI = new Retrofit.Builder()
-                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_szczepienia_widok3/FeatureServer/0/")
+                .baseUrl("https://services-eu1.arcgis.com/zk7YlClTgerl62BY/ArcGIS/rest/services/global_szczepienia_widok2/FeatureServer/0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(VaccinationsGeneralAPI.class);

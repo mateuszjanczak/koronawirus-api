@@ -16,5 +16,6 @@ public class VGGeneral {
     private Integer vaccinesDeliveredToPL;
     private Integer vaccinesDeliveredToPoints;
     private Integer availabilityInStock;
+    private Integer ordersInProgress;
     private List<VGVaccinationsAgeType> ageTypes;
 }

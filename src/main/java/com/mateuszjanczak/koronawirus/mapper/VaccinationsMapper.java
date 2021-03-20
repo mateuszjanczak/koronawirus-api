@@ -29,6 +29,7 @@ public class VaccinationsMapper {
                         .vaccinesDeliveredToPL(attributes.getSUMA_DAWEK_POLSKA())
                         .vaccinesDeliveredToPoints(attributes.getLICZBA_DAWEK_PUNKTY())
                         .availabilityInStock(attributes.getSTAN_MAGAZYN())
+                        .ordersInProgress(attributes.getZamowienia_realizacja())
                         .ageTypes(
                                 Arrays.asList(
                                         VGVaccinationsAgeType.builder().ageType(VGAgeType.AR0_17).vaccinations(attributes.getSZCZEPIENIA0_17()).build(),

@@ -1,6 +1,7 @@
 package com.mateuszjanczak.koronawirus.web.rest;
 
 import com.mateuszjanczak.koronawirus.repository.ICache;
+import com.mateuszjanczak.koronawirus.service.MixFacade;
 import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
 import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
 import org.springframework.http.HttpStatus;
@@ -27,12 +28,14 @@ public class TestResource {
     public static final String PATH_GET_SINGLE_POINT_REPORT = "/point/{name}";
     private final ICovidService covidService;
     private final IVaccinationsService vaccinationsService;
+    private final MixFacade mixFacade;
     private final ICache covidRepository;
     private final ICache vaccinationsRepository;
 
-    public TestResource(ICovidService covidService, IVaccinationsService vaccinationsService, ICache covidRepository, ICache vaccinationsRepository) {
+    public TestResource(ICovidService covidService, IVaccinationsService vaccinationsService, MixFacade mixFacade, ICache covidRepository, ICache vaccinationsRepository) {
         this.covidService = covidService;
         this.vaccinationsService = vaccinationsService;
+        this.mixFacade = mixFacade;
         this.covidRepository = covidRepository;
         this.vaccinationsRepository = vaccinationsRepository;
     }
@@ -80,6 +83,7 @@ public class TestResource {
         vaccinationsService.getAllDistrictReports();
         vaccinationsService.getAllProvinceReports();
         vaccinationsService.getAllPointsReports();
+        mixFacade.getDailyReport();
     }
 
     @GetMapping("/forceUpdate")

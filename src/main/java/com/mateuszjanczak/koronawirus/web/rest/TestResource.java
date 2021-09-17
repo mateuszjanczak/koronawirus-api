@@ -43,6 +43,10 @@ public class TestResource {
     HashMap<String, HashMap<String, String>> index(HttpServletRequest request) {
         HashMap<String, HashMap<String, String>> res = new HashMap<>();
 
+        HashMap<String, String> all = new HashMap<>();
+        all.put("getDailyReport", getCurrentUrl(request, COVID_VACCINATIONS_API) + PATH_GET_DAILY_REPORT);
+        res.put("all", all);
+
         HashMap<String, String> covid = new HashMap<>();
         covid.put("getDailyReport", getCurrentUrl(request, COVID_API) + PATH_GET_DAILY_REPORT);
         covid.put("getAllDistrictReports", getCurrentUrl(request, COVID_API) + PATH_GET_ALL_DISTRICT_REPORT);

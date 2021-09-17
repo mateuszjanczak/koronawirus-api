@@ -1,17 +1,16 @@
 package com.mateuszjanczak.koronawirus.repository;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.ExtendedRoot;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VaccinationsDistrictAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VaccinationsGeneralAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.points.VPPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.points.VaccinationsPointsAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VaccinationsProvinceAPI;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
+import com.mateuszjanczak.koronawirus.infrastructure.model.ExtendedRoot;
+import com.mateuszjanczak.koronawirus.infrastructure.model.Feature;
+import com.mateuszjanczak.koronawirus.infrastructure.model.Root;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.district.VDAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.district.VaccinationsDistrictAPI;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.general.VGAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.general.VaccinationsGeneralAPI;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.points.VaccinationsPointsAPI;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.province.VPAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.province.VaccinationsProvinceAPI;
 import com.mateuszjanczak.koronawirus.mapper.VaccinationsMapper;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.global.VGReport;

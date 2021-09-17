@@ -16,6 +16,141 @@ https://koronawirus-api.herokuapp.com/api/covid19/daily
 
 ### Koronawirus
 
+#### Raport zbiorczy o covidzie i szczepieniach
+
+```
+GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/daily
+GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
+```
+
+```json
+{
+  "reportDate": "2021-09-17T08:30:33.471+0000",
+  "general": {
+    "vaccinations": {
+      "vaccinations": 36878694,
+      "firstDoses": 19601546,
+      "secondDoses": 17277148,
+      "lostDoses": 391290,
+      "adverseReactions": 15278,
+      "vaccinesDeliveredToPL": 53910230,
+      "vaccinesDeliveredToPoints": 38488580,
+      "availabilityInStock": 9740010,
+      "ordersInProgress": 679440,
+      "ageTypes": [
+        {
+          "ageType": "AR0_17",
+          "vaccinations": 1454707
+        },
+        {
+          "ageType": "AR18_30",
+          "vaccinations": 4594417
+        },
+        {
+          "ageType": "AR31_40",
+          "vaccinations": 5409113
+        },
+        {
+          "ageType": "AR41_50",
+          "vaccinations": 6197161
+        },
+        {
+          "ageType": "AR51_60",
+          "vaccinations": 5563630
+        },
+        {
+          "ageType": "AR61_70",
+          "vaccinations": 7243381
+        },
+        {
+          "ageType": "AR71_75",
+          "vaccinations": 2847452
+        },
+        {
+          "ageType": "AR75_",
+          "vaccinations": 3452721
+        },
+        {
+          "ageType": "AR_UNDEFINED",
+          "vaccinations": 116112
+        },
+        {
+          "ageType": "AG_FEMALE",
+          "vaccinations": 19683665
+        },
+        {
+          "ageType": "AG_MALE",
+          "vaccinations": 17078902
+        },
+        {
+          "ageType": "AG_UNDEFINED",
+          "vaccinations": 116127
+        }
+      ]
+    },
+    "infections": {
+      "infections": 2896599,
+      "deaths": 75473,
+      "recovered": 2658812
+    }
+  },
+  "today": {
+    "vaccinations": {
+      "vaccinations": 34076,
+      "firstDoses": 17614,
+      "secondDoses": 16462
+    },
+    "infections": {
+      "newInfections": 652,
+      "newDeaths": 8,
+      "deathAgeRanges": [
+        {
+          "ageRange": "AR0_10",
+          "deaths": 0
+        },
+        {
+          "ageRange": "AR11_20",
+          "deaths": 0
+        },
+        {
+          "ageRange": "AR21_30",
+          "deaths": 0
+        },
+        {
+          "ageRange": "AR31_40",
+          "deaths": 0
+        },
+        {
+          "ageRange": "AR41_50",
+          "deaths": 0
+        },
+        {
+          "ageRange": "AR51_60",
+          "deaths": 0
+        },
+        {
+          "ageRange": "AR61_70",
+          "deaths": 1
+        },
+        {
+          "ageRange": "AR71_80",
+          "deaths": 5
+        },
+        {
+          "ageRange": "AR81_",
+          "deaths": 2
+        }
+      ],
+      "deathGender": {
+        "male": 6,
+        "female": 2
+      }
+    }
+  }
+}
+```
+
 #### Raporty - kraj
 
 ```

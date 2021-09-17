@@ -1,15 +1,15 @@
 package com.mateuszjanczak.koronawirus.repository;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.district.CovidDistrictAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.general.CovidGeneralAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.covid.province.CovidProvinceAPI;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.ExtendedRoot;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Feature;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.model.Root;
 import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
+import com.mateuszjanczak.koronawirus.infrastructure.covid.district.CDAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.covid.district.CovidDistrictAPI;
+import com.mateuszjanczak.koronawirus.infrastructure.covid.general.CGAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.covid.general.CovidGeneralAPI;
+import com.mateuszjanczak.koronawirus.infrastructure.covid.province.CPAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.covid.province.CovidProvinceAPI;
+import com.mateuszjanczak.koronawirus.infrastructure.model.ExtendedRoot;
+import com.mateuszjanczak.koronawirus.infrastructure.model.Feature;
+import com.mateuszjanczak.koronawirus.infrastructure.model.Root;
 import com.mateuszjanczak.koronawirus.mapper.CovidMapper;
 import com.mateuszjanczak.koronawirus.model.covid.district.CDReport;
 import com.mateuszjanczak.koronawirus.model.covid.global.CGReport;

@@ -14,13 +14,9 @@ import java.util.HashMap;
 
 @RestController
 public class TestResource {
-    private final ICovidService covidService;
-    private final IVaccinationsService vaccinationsService;
-    private final ICache covidRepository;
-    private final ICache vaccinationsRepository;
-
     public static final String COVID_API = "/api/covid19";
     public static final String VACCINATIONS_API = "/api/vaccinations";
+    public static final String COVID_VACCINATIONS_API = "/api/covid-vaccinations";
     public static final String PATH_GET_DAILY_REPORT = "/daily";
     public static final String PATH_GET_PERIODIC_REPORT = "/from/{from}/to/{to}";
     public static final String PATH_GET_ALL_PROVINCE_REPORT = "/province";
@@ -29,6 +25,10 @@ public class TestResource {
     public static final String PATH_GET_SINGLE_DISTRICT_REPORT = "/district/{name}";
     public static final String PATH_GET_ALL_POINT_REPORT = "/point";
     public static final String PATH_GET_SINGLE_POINT_REPORT = "/point/{name}";
+    private final ICovidService covidService;
+    private final IVaccinationsService vaccinationsService;
+    private final ICache covidRepository;
+    private final ICache vaccinationsRepository;
 
     public TestResource(ICovidService covidService, IVaccinationsService vaccinationsService, ICache covidRepository, ICache vaccinationsRepository) {
         this.covidService = covidService;

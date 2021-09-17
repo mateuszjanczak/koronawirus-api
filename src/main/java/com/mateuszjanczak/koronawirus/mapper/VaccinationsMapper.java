@@ -1,9 +1,9 @@
 package com.mateuszjanczak.koronawirus.mapper;
 
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.district.VDAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.general.VGAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.points.VPPAttributes;
-import com.mateuszjanczak.koronawirus.api.ministerstwozdrowia.vaccinations.province.VPAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.district.VDAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.general.VGAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.points.VPPAttributes;
+import com.mateuszjanczak.koronawirus.infrastructure.vaccinations.province.VPAttributes;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDGeneral;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDReport;
 import com.mateuszjanczak.koronawirus.model.vaccinations.district.VDToday;

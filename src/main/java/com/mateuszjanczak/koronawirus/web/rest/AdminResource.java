@@ -70,7 +70,7 @@ public class AdminResource {
         res.put("vaccinations", vaccinations);
 
         HashMap<String, String> tests = new HashMap<>();
-        vaccinations.put("getDailyReport", getCurrentUrl(request, TESTS_API) + PATH_GET_DAILY_REPORT);
+        tests.put("getDailyReport", getCurrentUrl(request, TESTS_API) + PATH_GET_DAILY_REPORT);
         res.put("tests", tests);
 
         return res;

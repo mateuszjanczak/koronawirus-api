@@ -61,7 +61,7 @@ public class TestsRepository implements ITestsRepository, ICache {
 
     @Override
     public List<TGReport> getPeriodicReport(Date from, Date to) {
-        return periodicReport;
+        return periodicReport.stream().filter(tgReport -> tgReport.getReportDate().after(from) && tgReport.getReportDate().before(to)).collect(Collectors.toList());
     }
 
     private void fetchPeriodicReport() {

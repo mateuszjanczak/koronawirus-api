@@ -3,6 +3,7 @@ package com.mateuszjanczak.koronawirus.web.rest;
 import com.mateuszjanczak.koronawirus.repository.ICache;
 import com.mateuszjanczak.koronawirus.service.MixFacade;
 import com.mateuszjanczak.koronawirus.service.interfaces.ICovidService;
+import com.mateuszjanczak.koronawirus.service.interfaces.ITestsService;
 import com.mateuszjanczak.koronawirus.service.interfaces.IVaccinationsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
-public class TestResource {
+public class AdminResource {
     public static final String COVID_API = "/api/covid19";
     public static final String VACCINATIONS_API = "/api/vaccinations";
-    public static final String COVID_VACCINATIONS_API = "/api/covid-vaccinations";
+    public static final String TESTS_API = "/api/tests";
+    public static final String COVID_VACCINATIONS_TESTS_API = "/api/covid-vaccinations-tests";
     public static final String PATH_GET_DAILY_REPORT = "/daily";
     public static final String PATH_GET_PERIODIC_REPORT = "/from/{from}/to/{to}";
     public static final String PATH_GET_ALL_PROVINCE_REPORT = "/province";
@@ -28,16 +30,20 @@ public class TestResource {
     public static final String PATH_GET_SINGLE_POINT_REPORT = "/point/{name}";
     private final ICovidService covidService;
     private final IVaccinationsService vaccinationsService;
+    private final ITestsService testsService;
     private final MixFacade mixFacade;
     private final ICache covidRepository;
     private final ICache vaccinationsRepository;
+    private final ICache testsRepository;
 
-    public TestResource(ICovidService covidService, IVaccinationsService vaccinationsService, MixFacade mixFacade, ICache covidRepository, ICache vaccinationsRepository) {
+    public AdminResource(ICovidService covidService, IVaccinationsService vaccinationsService, ITestsService testsService, MixFacade mixFacade, ICache covidRepository, ICache vaccinationsRepository, ICache testsRepository) {
         this.covidService = covidService;
         this.vaccinationsService = vaccinationsService;
+        this.testsService = testsService;
         this.mixFacade = mixFacade;
         this.covidRepository = covidRepository;
         this.vaccinationsRepository = vaccinationsRepository;
+        this.testsRepository = testsRepository;
     }
 
     @GetMapping("/")
@@ -47,7 +53,7 @@ public class TestResource {
         HashMap<String, HashMap<String, String>> res = new HashMap<>();
 
         HashMap<String, String> all = new HashMap<>();
-        all.put("getDailyReport", getCurrentUrl(request, COVID_VACCINATIONS_API) + PATH_GET_DAILY_REPORT);
+        all.put("getDailyReport", getCurrentUrl(request, COVID_VACCINATIONS_TESTS_API) + PATH_GET_DAILY_REPORT);
         res.put("all", all);
 
         HashMap<String, String> covid = new HashMap<>();
@@ -62,6 +68,10 @@ public class TestResource {
         vaccinations.put("getAllProvinceReports", getCurrentUrl(request, VACCINATIONS_API) + PATH_GET_ALL_PROVINCE_REPORT);
         vaccinations.put("getAllPointsReports", getCurrentUrl(request, VACCINATIONS_API) + PATH_GET_ALL_POINT_REPORT);
         res.put("vaccinations", vaccinations);
+
+        HashMap<String, String> tests = new HashMap<>();
+        vaccinations.put("getDailyReport", getCurrentUrl(request, TESTS_API) + PATH_GET_DAILY_REPORT);
+        res.put("tests", tests);
 
         return res;
     }
@@ -83,6 +93,7 @@ public class TestResource {
         vaccinationsService.getAllDistrictReports();
         vaccinationsService.getAllProvinceReports();
         vaccinationsService.getAllPointsReports();
+        testsService.getDailyReport();
         mixFacade.getDailyReport();
     }
 
@@ -92,5 +103,6 @@ public class TestResource {
     void forceUpdate() {
         covidRepository.fetchAll();
         vaccinationsRepository.fetchAll();
+        testsRepository.fetchAll();
     }
 }

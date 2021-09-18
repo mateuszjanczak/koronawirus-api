@@ -44,10 +44,18 @@ public class ExHandler {
     }
 
     @ExceptionHandler(ApiErrorException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
     public @ResponseBody
     ErrorResponse handleApiErrorException() {
         String errorMessage = "The original server is not responding.";
+        return new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, errorMessage);
+    }
+
+    @ExceptionHandler(IncompleteDataException.class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    public @ResponseBody
+    ErrorResponse handleIncompleteDataException() {
+        String errorMessage = "No complete data from today.";
         return new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, errorMessage);
     }
 }

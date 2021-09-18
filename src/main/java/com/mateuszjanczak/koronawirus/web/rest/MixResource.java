@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.mateuszjanczak.koronawirus.web.rest.TestResource.*;
+import static com.mateuszjanczak.koronawirus.web.rest.AdminResource.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping(COVID_VACCINATIONS_API)
+@RequestMapping(COVID_VACCINATIONS_TESTS_API)
 public class MixResource {
     private final MixFacade mixFacade;
 

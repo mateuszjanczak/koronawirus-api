@@ -16,12 +16,12 @@ https://koronawirus-api.herokuapp.com/api/covid19/daily
 
 ### Koronawirus
 
-#### Raport zbiorczy o covidzie i szczepieniach
+#### Raport zbiorczy o covidzie, testach i szczepieniach
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/daily
-GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/from/2021-01-01/to/2021-02-08/
-GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
+GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/daily
+GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 
 ```json
@@ -93,6 +93,12 @@ GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/from/2021-01-01
       "infections": 2896599,
       "deaths": 75473,
       "recovered": 2658812
+    },
+    "tests": {
+      "infections": 2896599,
+      "deaths": 75473,
+      "recovered": 2658812,
+      "quarantine": 82237
     }
   },
   "today": {
@@ -145,6 +151,20 @@ GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations/from/2021-01-01
       "deathGender": {
         "male": 6,
         "female": 2
+      }
+    },
+    "tests": {
+      "infections": 652,
+      "deaths": {
+        "deaths": 8,
+        "covid": 2,
+        "coexistent": 6
+      },
+      "recovered": 498,
+      "tests": {
+        "all": 35959,
+        "positive": 736,
+        "poz": 5452
       }
     }
   }
@@ -284,6 +304,42 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
       "negative": 119,
       "poz": 32,
       "other": 1
+    }
+  }
+}
+```
+
+### Testy
+
+### Raporty - kraj
+
+```
+GET https://koronawirus-api.herokuapp.com/api/tests/daily
+GET https://koronawirus-api.herokuapp.com/api/tests/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.herokuapp.com/api/tests/from/2021-01-01 00:00/to/2021-02-08 23:59/
+```
+
+```json
+{
+  "reportDate": "2021-09-17T08:30:33.965+0000",
+  "general": {
+    "infections": 2896599,
+    "deaths": 75473,
+    "recovered": 2658812,
+    "quarantine": 82237
+  },
+  "today": {
+    "infections": 652,
+    "deaths": {
+      "deaths": 8,
+      "covid": 2,
+      "coexistent": 6
+    },
+    "recovered": 498,
+    "tests": {
+      "all": 35959,
+      "positive": 736,
+      "poz": 5452
     }
   }
 }

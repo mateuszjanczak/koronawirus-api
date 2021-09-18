@@ -20,8 +20,6 @@ https://koronawirus-api.herokuapp.com/api/covid19/daily
 
 ```
 GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/daily
-GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/from/2021-01-01/to/2021-02-08/
-GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 
 ```json
@@ -315,8 +313,6 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
 
 ```
 GET https://koronawirus-api.herokuapp.com/api/tests/daily
-GET https://koronawirus-api.herokuapp.com/api/tests/from/2021-01-01/to/2021-02-08/
-GET https://koronawirus-api.herokuapp.com/api/tests/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 
 ```json

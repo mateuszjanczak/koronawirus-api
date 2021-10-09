@@ -1,6 +1,5 @@
 package com.mateuszjanczak.koronawirus.repository;
 
-import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.infrastructure.model.Feature;
 import com.mateuszjanczak.koronawirus.infrastructure.model.Root;
 import com.mateuszjanczak.koronawirus.infrastructure.tests.TGAttributes;
@@ -55,7 +54,7 @@ public class TestsRepository implements ITestsRepository, ICache {
             TGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             dailyReport = TestsMapper.apply(attributes);
         } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -79,7 +78,7 @@ public class TestsRepository implements ITestsRepository, ICache {
                     .map(TestsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 }

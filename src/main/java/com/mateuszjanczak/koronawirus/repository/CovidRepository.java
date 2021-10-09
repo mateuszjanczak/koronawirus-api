@@ -1,6 +1,5 @@
 package com.mateuszjanczak.koronawirus.repository;
 
-import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.infrastructure.covid.district.CDAttributes;
 import com.mateuszjanczak.koronawirus.infrastructure.covid.district.CovidDistrictAPI;
 import com.mateuszjanczak.koronawirus.infrastructure.covid.general.CGAttributes;
@@ -76,7 +75,7 @@ public class CovidRepository implements ICovidRepository, ICache {
             CGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             dailyReport = CovidMapper.apply(attributes);
         } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -100,7 +99,7 @@ public class CovidRepository implements ICovidRepository, ICache {
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -123,7 +122,7 @@ public class CovidRepository implements ICovidRepository, ICache {
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -151,7 +150,7 @@ public class CovidRepository implements ICovidRepository, ICache {
                     .map(CovidMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 

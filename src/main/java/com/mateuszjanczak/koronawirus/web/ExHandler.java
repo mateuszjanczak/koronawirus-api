@@ -51,7 +51,7 @@ public class ExHandler {
         return new ErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, errorMessage);
     }
 
-    @ExceptionHandler(IncompleteDataException.class)
+    @ExceptionHandler({IncompleteDataException.class, NullPointerException.class})
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
     public @ResponseBody
     ErrorResponse handleIncompleteDataException() {

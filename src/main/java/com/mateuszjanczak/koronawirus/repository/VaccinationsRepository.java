@@ -1,6 +1,5 @@
 package com.mateuszjanczak.koronawirus.repository;
 
-import com.mateuszjanczak.koronawirus.exception.ApiErrorException;
 import com.mateuszjanczak.koronawirus.infrastructure.model.ExtendedRoot;
 import com.mateuszjanczak.koronawirus.infrastructure.model.Feature;
 import com.mateuszjanczak.koronawirus.infrastructure.model.Root;
@@ -84,7 +83,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
             VGAttributes attributes = Objects.requireNonNull(response).getFeatures().get(0).getAttributes();
             dailyReport = VaccinationsMapper.apply(attributes);
         } catch (IOException | NullPointerException | IndexOutOfBoundsException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -108,7 +107,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -131,7 +130,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 
@@ -159,7 +158,7 @@ public class VaccinationsRepository implements IVaccinationsRepository, ICache {
                     .map(VaccinationsMapper::apply)
                     .collect(Collectors.toList());
         } catch (IOException | NullPointerException e) {
-            throw new ApiErrorException();
+//            throw new ApiErrorException();
         }
     }
 

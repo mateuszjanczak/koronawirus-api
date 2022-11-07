@@ -10,7 +10,8 @@ Web scraper do pozyskiwania informacji o statystykach koronawirusa ze strony min
 
 Dane są odświeżane co 15 minut.
 
-https://koronawirus-api.herokuapp.com/api/covid19/daily
+https://koronawirus-api.koyeb.app/api/covid19/daily  
+~~https://koronawirus-api.herokuapp.com/api/covid19/daily~~ (zostanie wyłączone 28 listopada)
 
 ### Endpointy
 
@@ -19,7 +20,7 @@ https://koronawirus-api.herokuapp.com/api/covid19/daily
 #### Raport zbiorczy o covidzie, testach i szczepieniach
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/daily
+GET https://koronawirus-api.koyeb.app/api/covid-vaccinations-tests/daily
 ```
 
 ```json
@@ -172,9 +173,9 @@ GET https://koronawirus-api.herokuapp.com/api/covid-vaccinations-tests/daily
 #### Raporty - kraj
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/covid19/daily
-GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01/to/2021-02-08/
-GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01 00:00/to/2021-02-08 23:59/
+GET https://koronawirus-api.koyeb.app/api/covid19/daily
+GET https://koronawirus-api.koyeb.app/api/covid19/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.koyeb.app/api/covid19/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 
 ```json
@@ -237,8 +238,8 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/from/2021-01-01 00:00/to/2
 #### Raporty - województwo
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/covid19/province
-GET https://koronawirus-api.herokuapp.com/api/covid19/province/małopolskie
+GET https://koronawirus-api.koyeb.app/api/covid19/province
+GET https://koronawirus-api.koyeb.app/api/covid19/province/małopolskie
 ```
 
 ```json
@@ -274,8 +275,8 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/province/małopolskie
 #### Raporty - powiat
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/covid19/district
-GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
+GET https://koronawirus-api.koyeb.app/api/covid19/district
+GET https://koronawirus-api.koyeb.app/api/covid19/district/powiat tarnowski
 ```
 
 ```json
@@ -312,7 +313,7 @@ GET https://koronawirus-api.herokuapp.com/api/covid19/district/powiat tarnowski
 ### Raporty - kraj
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/tests/daily
+GET https://koronawirus-api.koyeb.app/api/tests/daily
 ```
 
 ```json
@@ -346,9 +347,9 @@ GET https://koronawirus-api.herokuapp.com/api/tests/daily
 #### Raporty - kraj
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/daily
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01/to/2021-02-08/
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
+GET https://koronawirus-api.koyeb.app/api/vaccinations/daily
+GET https://koronawirus-api.koyeb.app/api/vaccinations/from/2021-01-01/to/2021-02-08/
+GET https://koronawirus-api.koyeb.app/api/vaccinations/from/2021-01-01 00:00/to/2021-02-08 23:59/
 ```
 
 ```json
@@ -426,8 +427,8 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/from/2021-01-01 00:00
 #### Raporty - województwo
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/province
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/province/małopolskie
+GET https://koronawirus-api.koyeb.app/api/vaccinations/province
+GET https://koronawirus-api.koyeb.app/api/vaccinations/province/małopolskie
 ```
 
 ```json
@@ -451,8 +452,8 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/province/małopolskie
 #### Raporty - powiat
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/district
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarnowski
+GET https://koronawirus-api.koyeb.app/api/vaccinations/district
+GET https://koronawirus-api.koyeb.app/api/vaccinations/district/powiat tarnowski
 ```
 
 ```json
@@ -476,8 +477,8 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/district/powiat tarno
 #### ~~Raporty - punkty szczepień~~
 
 ```
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/point
-GET https://koronawirus-api.herokuapp.com/api/vaccinations/point/ZESPÓŁ OPIEKI ZDROWOTNEJ W DĄBROWIE TARNOWSKIEJ
+GET https://koronawirus-api.koyeb.app/api/vaccinations/point
+GET https://koronawirus-api.koyeb.app/api/vaccinations/point/ZESPÓŁ OPIEKI ZDROWOTNEJ W DĄBROWIE TARNOWSKIEJ
 ```
 
 ```json
@@ -508,5 +509,5 @@ GET https://koronawirus-api.herokuapp.com/api/vaccinations/point/ZESPÓŁ OPIEKI
 #### Force Update
 
 ```
-GET http://localhost:8080/forceUpdate
+GET https://koronawirus-api.koyeb.app/forceUpdate
 ```

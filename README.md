@@ -11,7 +11,6 @@ Web scraper do pozyskiwania informacji o statystykach koronawirusa ze strony min
 Dane są odświeżane co 15 minut.
 
 https://koronawirus-api.koyeb.app/api/covid19/daily  
-~~https://koronawirus-api.herokuapp.com/api/covid19/daily~~ (zostanie wyłączone 28 listopada)
 
 ### Endpointy
 
